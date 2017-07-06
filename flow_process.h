@@ -1,4 +1,4 @@
-#ifndef FLOW_PROCESS_H
+﻿#ifndef FLOW_PROCESS_H
 #define FLOW_PROCESS_H
 
 #include <QWidget>
@@ -14,7 +14,8 @@ class flow_process : public QWidget
 public:
     explicit flow_process(QWidget *parent = 0);
     ~flow_process();
-
+private:
+    void init_conn();
 private:
     Ui::flow_process *ui;
 };

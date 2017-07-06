@@ -4,6 +4,7 @@
 #include <boost/filesystem.hpp>
 #include <QStyleFactory>
 #include <boost/range/adaptors.hpp>
+#include "interface_control/flow_process_ribbon.h"
 
 
 void set_style ()
@@ -34,6 +35,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     set_style();
+//    flow_process_ribbon w;
     flow_process w;
     w.show();
 

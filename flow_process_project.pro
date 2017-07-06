@@ -26,9 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cc\
-        flow_process.cc
+        flow_process.cc \
+    interface_control/ribbon.cc \
+    interface_control/flow_process_ribbon.cc
 
-HEADERS  += flow_process.h
+HEADERS  += flow_process.h \
+    interface_control/ribbon.h \
+    interface_control/flow_process_ribbon.h
 
 FORMS    += flow_process.ui
 
