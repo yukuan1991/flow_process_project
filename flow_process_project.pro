@@ -7,6 +7,8 @@
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+CONFIG -= c++11
+QMAKE_CXXFLAGS += -std=c++1z
 
 TARGET = flow_process_project
 TEMPLATE = app
@@ -29,3 +31,8 @@ SOURCES += main.cc\
 HEADERS  += flow_process.h
 
 FORMS    += flow_process.ui
+
+LIBS += -lboost_locale
+LIBS += -liconv
+LIBS += -lboost_filesystem
+LIBS += -lboost_system
