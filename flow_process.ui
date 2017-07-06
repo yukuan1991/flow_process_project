@@ -33,7 +33,7 @@
     <widget class="flow_process_ribbon" name="flowprocess_ribbon" native="true"/>
    </item>
    <item>
-    <widget class="QMdiArea" name="mdiArea"/>
+    <widget class="QMdiArea" name="mdiarea"/>
    </item>
   </layout>
  </widget>

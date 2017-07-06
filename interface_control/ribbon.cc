@@ -26,8 +26,6 @@ ribbon::ribbon(QWidget *parent)
     setMaximumHeight (130);
     setMinimumHeight (130);
 
-//    connect(this, &ribbon::file_menu_triggered, [] (const QString & s) { qDebug() << s; });
-
     setup_ui ();
 }
 
@@ -70,44 +68,6 @@ std::unique_ptr<ribbon_tool> ribbon::make_icon(const QPixmap &icon, const QStrin
 void ribbon::setup_ui()
 {
     setup_menu ();
-
-    //std::array<ui_group, 3> tab_content;
-
-    //button_cell b;
-
-    //b.add ("按钮1", QPixmap ("png/导出.png"));
-    //b.add ("按钮2", QPixmap ("png/导出.png"));
-    //b.add ("按钮3", QPixmap ("png/导出.png"));
-    //b.set_title ("第A类");
-    //tab_content.at (0) = ::move (b);
-
-
-    //b.add ("按钮1", QPixmap ("png/导出.png"));
-    //b.add ("按钮2", QPixmap ("png/导出.png"));
-    //b.set_title ("第B类");
-    //tab_content.at (1) = ::move (b);
-
-
-
-    //ribbon_tool* jiagong = null, * yuancailiao = null, * chanchengpin = null;
-    //frame_group c;
-    //c.add (tr ("加工"), QPixmap ("png/加工.png"), jiagong);
-    //c.add (tr ("原材料"), QPixmap ("png/原材料.png"), yuancailiao);
-    //c.add (tr ("产成品"), QPixmap ("png/产成品.png"), chanchengpin);
-    //c.set_title ("图形绘画");
-
-    //tab_content.at (2) = ::move (c);
-
-    //this->addTab (make_tab (tab_content).release (), "测试");
-
-    //auto group = new QButtonGroup (this);
-    //group->addButton (jiagong);
-    //group->addButton (yuancailiao);
-    //group->addButton (chanchengpin);
-
-    //using func_type = void (QButtonGroup::*) (QAbstractButton *);
-    //auto func = func_type {&QButtonGroup::buttonClicked};
-    //connect (group, func, [] (auto&&o){ qDebug () << o->objectName (); });
 }
 
 
@@ -135,10 +95,17 @@ void ribbon::setup_menu()
 
     action =  make_action (QPixmap ("png/保存.png"), "保存");
     connect (action.get (), &QAction::triggered, [this] { file_menu_triggered ("保存"); });
+    connect (this, &ribbon::set_enabled, action.get(), &QAction::setEnabled);
     menu->addAction (action.release ());
 
     action =  make_action (QPixmap ("png/另存为.png"), "另存为");
     connect (action.get (), &QAction::triggered, [this] { file_menu_triggered ("另存为"); });
+    connect (this, &ribbon::set_enabled, action.get(), &QAction::setEnabled);
+    menu->addAction (action.release ());
+
+    action =  make_action (QPixmap ("png/打印.png"), "打印");
+    connect (action.get (), &QAction::triggered, [this] { file_menu_triggered ("打印"); });
+    connect (this, &ribbon::set_enabled, action.get(), &QAction::setEnabled);
     menu->addAction (action.release ());
 
     action =  make_action (QPixmap ("png/退出.png"), "退出");

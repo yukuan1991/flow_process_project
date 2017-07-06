@@ -34,4 +34,15 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
     }
 
     connect(cut_, &ribbon_tool::clicked, this, &flow_process_ribbon::cut);
+    connect(copy_, &ribbon_tool::clicked, this, &flow_process_ribbon::copy);
+    connect(paste_, &ribbon_tool::clicked, this, &flow_process_ribbon::paste);
+    connect(del_, &ribbon_tool::clicked, this, &flow_process_ribbon::del);
+
+    connect (this, &flow_process_ribbon::set_enabled, cut_, &ribbon_tool::setEnabled);
+    connect (this, &flow_process_ribbon::set_enabled, copy_, &ribbon_tool::setEnabled);
+    connect (this, &flow_process_ribbon::set_enabled, paste_, &ribbon_tool::setEnabled);
+    connect (this, &flow_process_ribbon::set_enabled, del_, &ribbon_tool::setEnabled);
+
+    connect(help_, &ribbon_tool::clicked, this, &flow_process_ribbon::help);
+
 }

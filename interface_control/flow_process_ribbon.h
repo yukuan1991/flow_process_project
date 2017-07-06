@@ -5,8 +5,11 @@ class flow_process_ribbon : public ribbon
 {
     Q_OBJECT
 signals:
-    void file_menu_triggered (const QString &);
     void cut();
+    void copy();
+    void paste();
+    void del();
+    void help();
 public:
     flow_process_ribbon(QWidget * parent = nullptr);
 private:
