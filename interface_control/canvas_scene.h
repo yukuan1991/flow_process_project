@@ -7,7 +7,7 @@ using std::unique_ptr;
 using std::make_unique;
 class symbol_item;
 class QLineEdit;
-
+class QTableWidget;
 
 class canvas_scene : public QGraphicsScene
 {
@@ -52,6 +52,7 @@ private:
     QLineEdit* edit_time_unit_;
     std::vector<std::vector<symbol_item*>> icons_;
 
+    QTableWidget* tablewidget_;
 private:
     QRectF print_rect_;
 private:

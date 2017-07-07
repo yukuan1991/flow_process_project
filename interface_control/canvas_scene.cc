@@ -13,6 +13,12 @@
 #include <QLabel>
 #include "json.hpp"
 #include <boost/range/algorithm.hpp>
+#include <QTableWidget>
+#include <QDebug>
+#include <QHeaderView>
+#include <QGroupBox>
+#include <QFormLayout>
+#include <QHBoxLayout>
 
 const QPointF canvas_scene::top_left = QPointF (0, 0);
 
@@ -52,7 +58,59 @@ bool canvas_scene::init()
 
     //connect (this, &canvas_scene::scene_changed, [this] () { qDebug() << "scene changed"; });
 
+    tablewidget_ = new QTableWidget(25, 3);
 
+    QStringList header;
+    header << "工作说明" << "距离" << "时间";
+    tablewidget_->setHorizontalHeaderLabels(header);
+//    QTableWidgetItem*  job_description = new QTableWidgetItem("工作说明");
+//    tablewidget_->setHorizontalHeaderItem(0, job_description);
+
+    tablewidget_->move(0, 140);
+    tablewidget_->resize(375, 809);
+
+    qDebug() << "header" << tablewidget_->verticalHeader()->height();
+    tablewidget_->horizontalHeader()->setFixedHeight(60);
+//    tablewidget_->verticalHeader()->setDefaultSectionSize(30);
+    tablewidget_->setColumnWidth(0, 150);
+    tablewidget_->setColumnWidth(1, 90);
+    tablewidget_->setColumnWidth(2, 90);
+    auto proxywidget = addWidget(tablewidget_);
+
+    QGroupBox *groupBox = new QGroupBox("单位设置");
+    QLabel *timeLabel = new QLabel("时间单位:");
+//    timeLabel->resize(45, 30);
+//    timeLabel->setFixedSize(45, 30);
+    QLineEdit *timeEdit = new QLineEdit;
+//    timeEdit->resize(45, 30);
+//    timeEdit->setFixedSize(45, 30);
+
+    QLabel *distanceLabel = new QLabel("距离单位:");
+//    distanceLabel->resize(45, 30);
+    QLineEdit *distanceEdit = new QLineEdit;
+//    distanceEdit->resize(45, 30);
+
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(distanceLabel);
+    layout->addWidget(distanceEdit);
+    layout->addWidget(timeLabel);
+    layout->addWidget(timeEdit);
+
+//    layout->addRow(distanceLabel, distanceEdit);
+//    layout->addRow(timeLabel, timeEdit);
+    groupBox->setLayout(layout);
+    groupBox->setFixedSize(375, 58);
+    groupBox->move(0, 121);
+//    addWidget(groupBox);
+
+//    QTableWidgetItem* headerh = new QTableWidgetItem("id");
+//    tablewidget->setHorizontalHeaderItem(0, headerh);
+//    QTableWidgetItem *cubesHeaderItem = new QTableWidgetItem(tr("Cubes"));
+//    cubesHeaderItem->setIcon(QIcon(QPixmap("png/flow_process.png")));
+//    cubesHeaderItem->setTextAlignment(Qt::AlignVCenter);
+//    tablewidget->setHorizontalHeaderItem(0, cubesHeaderItem);
+//    auto w = addWidget(tablewidget);
+//    w->moveBy(0, 140);
     return true;
 }
 
@@ -148,7 +206,7 @@ void canvas_scene::drawBackground(QPainter *painter, const QRectF &rect)
     draw_distance(painter);
 }
 
-/*每行高40个像素，共32行*/
+/*每行高30个像素, 共31行*/
 void canvas_scene::draw_table(QPainter *painter)
 {
     const auto first_table_rect = QRectF(top_left.x() + offset_topleft_width_,
