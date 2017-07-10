@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <QDialog>
+#include <QComboBox>
 
-class QComboBox;
 class QLabel;
 class distance_unit_dlg : public QDialog
 {
@@ -10,6 +10,7 @@ signals:
     void currenttextchanged(const QString &s);
 public:
     distance_unit_dlg(QWidget *parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
+    void set_unit(const QString& s) { unit_->setCurrentText(s); }
 private:
     QComboBox* unit_;
     QLabel* time_;

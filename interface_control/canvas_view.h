@@ -27,6 +27,8 @@ signals:
     void view_closed();
     void time_unit_changed(const QString &s);
     void distance_unit_changed(const QString &s);
+    void load_time_unit(const QString &s);
+    void load_distance_unit(const QString &s);
 public:
     bool is_unsaved() { return unsaved_content_; }
     bool load (const std::string& data);
@@ -39,8 +41,8 @@ protected:
     template<typename ... ARGS>
     canvas_view(ARGS && ... args) : QGraphicsView(std::forward<ARGS> (args)...) {}
     bool init();
-protected:
-    void closeEvent(QCloseEvent* event) override;
+//protected:
+//    void closeEvent(QCloseEvent* event) override;
 private:
     unique_ptr<canvas_scene> scene_ = canvas_scene::make (QRectF{0, 0, 1100, 1500});
 

@@ -15,6 +15,8 @@ class canvas_scene : public QGraphicsScene
 signals:
     void item_selection_changed (int row, int col, bool selected);
     void scene_changed();
+    void load_time_unit(const QString &s);
+    void load_distance_unit(const QString &s);
 public:
     void set_time_unit(const QString & s) { time_unit_text_ = s; }
     void set_distance_unit(const QString & s) { distance_unit_text_ = s; }
@@ -56,8 +58,8 @@ private:
 
 private:
     std::vector<std::vector<QLineEdit*>> second_table_edit_;
-    QLineEdit* edit_distance_unit_;
-    QLineEdit* edit_time_unit_;
+//    QLineEdit* edit_distance_unit_;
+//    QLineEdit* edit_time_unit_;
     std::vector<std::vector<symbol_item*>> icons_;
 
     embed_table* tablewidget_;

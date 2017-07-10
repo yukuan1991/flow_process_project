@@ -194,6 +194,11 @@ canvas_view *flow_process::create_canvas_view()
     connect(time_, &time_unit_dlg::currenttextchanged, ptr_canvas, &canvas_view::time_unit_changed);
     connect(distance_, &distance_unit_dlg::currenttextchanged, ptr_canvas, &canvas_view::distance_unit_changed);
 
+    connect(ptr_canvas, &canvas_view::load_distance_unit, distance_, &distance_unit_dlg::set_unit);
+    connect(ptr_canvas, &canvas_view::load_time_unit, [] (const QString& s) { qDebug() << "flow_process" << s;});
+    connect(ptr_canvas, &canvas_view::load_time_unit, time_, &time_unit_dlg::set_unit);
+
+
 //    connect(ptr_canvas, &canvas_view::view_closed, this, &flow_process::on_view_closed, Qt::QueuedConnection);
     return ptr_canvas;
 }

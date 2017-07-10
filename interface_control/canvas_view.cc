@@ -21,25 +21,28 @@ bool canvas_view::init()
     connect (this, &canvas_view::time_unit_changed, [ptr_scene] (const QString& s) { ptr_scene->set_time_unit(s); });
     connect (this, &canvas_view::distance_unit_changed, [ptr_scene] (const QString& s) { ptr_scene->set_distance_unit(s); });
 
+    connect (ptr_scene, &canvas_scene::load_time_unit, this, &canvas_view::load_time_unit);
+    connect (ptr_scene, &canvas_scene::load_distance_unit, this, &canvas_view::load_distance_unit);
+
     connect (this, &canvas_view::time_unit_changed, [] (const QString& s) { qDebug() << "canvas_view: " << s; });
 
     return true;
 }
 
-void canvas_view::closeEvent(QCloseEvent *event)
-{
-    const bool unsaved = unsaved_content_;
+//void canvas_view::closeEvent(QCloseEvent *event)
+//{
+//    const bool unsaved = unsaved_content_;
 
-    if(unsaved)
-    {
-        emit view_closed();
-        event->ignore();
-    }
-    else
-    {
-        QGraphicsView::closeEvent(event);
-    }
-}
+//    if(unsaved)
+//    {
+//        emit view_closed();
+//        event->ignore();
+//    }
+//    else
+//    {
+//        QGraphicsView::closeEvent(event);
+//    }
+//}
 
 canvas_view::~canvas_view()
 {
