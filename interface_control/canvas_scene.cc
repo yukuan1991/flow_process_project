@@ -334,7 +334,7 @@ void canvas_scene::draw_symbol(QPainter *painter)
                           carry_line_right);
 
         painter->save();
-        QFont font("宋体", 17);
+        QFont font("Dotum", 17);
         painter->setFont(font);
         QRectF wait_rect(symbol_table_topleft.x() + 3 * (width_ / 10) + offset_tab_x,
                          symbol_table_topleft.y() + offset_tab_y,
@@ -383,7 +383,7 @@ void canvas_scene::draw_symbol(QPainter *painter)
                           carry_line_right);
 
         painter->save();
-        QFont font("宋体", 17);
+        QFont font("Dotum", 17);
         painter->setFont(font);
         QRectF wait_rect(symbol_table_topleft.x() + 3.5 * (width_ / 10),
                                symbol_table_topleft.y(),
