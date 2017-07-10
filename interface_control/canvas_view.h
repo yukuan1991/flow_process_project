@@ -25,6 +25,8 @@ public:
 signals:
     void saved();
     void view_closed();
+    void time_unit_changed(const QString &s);
+    void distance_unit_changed(const QString &s);
 public:
     bool is_unsaved() { return unsaved_content_; }
     bool load (const std::string& data);

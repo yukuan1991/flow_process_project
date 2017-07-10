@@ -7,7 +7,7 @@ using std::unique_ptr;
 using std::make_unique;
 class symbol_item;
 class QLineEdit;
-class QTableWidget;
+class embed_table;
 
 class canvas_scene : public QGraphicsScene
 {
@@ -15,6 +15,13 @@ class canvas_scene : public QGraphicsScene
 signals:
     void item_selection_changed (int row, int col, bool selected);
     void scene_changed();
+public:
+    void set_time_unit(const QString & s) { time_unit_text_ = s; }
+    void set_distance_unit(const QString & s) { distance_unit_text_ = s; }
+
+    const QString & time_unit() { return time_unit_text_; }
+    const QString & distance_unit() { return distance_unit_text_; }
+
 public:
     template<typename ... ARGS> static unique_ptr<canvas_scene> make (ARGS && ...args);
 
@@ -32,7 +39,8 @@ protected:
     canvas_scene(ARGS && ... args) : QGraphicsScene(std::forward<ARGS> (args)...) {}
 
     bool init();
-    void set_lineedit();
+    //void set_lineedit();
+    void set_table();
     void add_symbol_item();
 
     void draw_table(QPainter* painter);
@@ -52,7 +60,9 @@ private:
     QLineEdit* edit_time_unit_;
     std::vector<std::vector<symbol_item*>> icons_;
 
-    QTableWidget* tablewidget_;
+    embed_table* tablewidget_;
+    QString time_unit_text_ = "";
+    QString distance_unit_text_ = "";
 private:
     QRectF print_rect_;
 private:

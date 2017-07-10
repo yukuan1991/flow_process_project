@@ -41,7 +41,11 @@ SOURCES += main.cc\
     item/wait_item.cc \
     interface_control/canvas_scene.cc \
     interface_control/canvas_view.cc \
-    interface_control/about_us_dlg.cc
+    interface_control/about_us_dlg.cc \
+    interface_control/embed_table.cc \
+    interface_control/embed_groupbox.cc \
+    interface_control/time_unit_dlg.cc \
+    interface_control/distance_unit_dlg.cc
 
 HEADERS  += flow_process.h \
     interface_control/ribbon.h \
@@ -55,7 +59,11 @@ HEADERS  += flow_process.h \
     interface_control/canvas_scene.h \
     interface_control/canvas_view.h \
     json.hpp \
-    interface_control/about_us_dlg.h
+    interface_control/about_us_dlg.h \
+    interface_control/embed_table.h \
+    interface_control/embed_groupbox.h \
+    interface_control/time_unit_dlg.h \
+    interface_control/distance_unit_dlg.h
 
 FORMS    += flow_process.ui
 

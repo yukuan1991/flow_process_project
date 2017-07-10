@@ -19,6 +19,7 @@
 #include <QGroupBox>
 #include <QFormLayout>
 #include <QHBoxLayout>
+#include "embed_table.h"
 
 const QPointF canvas_scene::top_left = QPointF (0, 0);
 
@@ -30,11 +31,11 @@ using nlohmann::json;
 
 bool canvas_scene::init()
 {
-    second_table_edit_.resize (second_table_row_size_);
-    for (auto & it : second_table_edit_)
-    {
-        it.resize (second_table_front_col);
-    }
+//    second_table_edit_.resize (second_table_row_size_);
+//    for (auto & it : second_table_edit_)
+//    {
+//        it.resize (second_table_front_col);
+//    }
 
     //unit_edit_.resize(2);
 
@@ -53,64 +54,14 @@ bool canvas_scene::init()
     const auto offset = 20;
     print_rect_ = QRectF(0, 0, width_, line_height_ * 31 + offset);
 
-    set_lineedit();
+//    set_lineedit();
     add_symbol_item();
+    set_table();
+
 
     //connect (this, &canvas_scene::scene_changed, [this] () { qDebug() << "scene changed"; });
 
-    tablewidget_ = new QTableWidget(25, 3);
 
-    QStringList header;
-    header << "工作说明" << "距离" << "时间";
-    tablewidget_->setHorizontalHeaderLabels(header);
-//    QTableWidgetItem*  job_description = new QTableWidgetItem("工作说明");
-//    tablewidget_->setHorizontalHeaderItem(0, job_description);
-
-    tablewidget_->move(0, 140);
-    tablewidget_->resize(375, 809);
-
-    qDebug() << "header" << tablewidget_->verticalHeader()->height();
-    tablewidget_->horizontalHeader()->setFixedHeight(60);
-//    tablewidget_->verticalHeader()->setDefaultSectionSize(30);
-    tablewidget_->setColumnWidth(0, 150);
-    tablewidget_->setColumnWidth(1, 90);
-    tablewidget_->setColumnWidth(2, 90);
-    auto proxywidget = addWidget(tablewidget_);
-
-    QGroupBox *groupBox = new QGroupBox("单位设置");
-    QLabel *timeLabel = new QLabel("时间单位:");
-//    timeLabel->resize(45, 30);
-//    timeLabel->setFixedSize(45, 30);
-    QLineEdit *timeEdit = new QLineEdit;
-//    timeEdit->resize(45, 30);
-//    timeEdit->setFixedSize(45, 30);
-
-    QLabel *distanceLabel = new QLabel("距离单位:");
-//    distanceLabel->resize(45, 30);
-    QLineEdit *distanceEdit = new QLineEdit;
-//    distanceEdit->resize(45, 30);
-
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(distanceLabel);
-    layout->addWidget(distanceEdit);
-    layout->addWidget(timeLabel);
-    layout->addWidget(timeEdit);
-
-//    layout->addRow(distanceLabel, distanceEdit);
-//    layout->addRow(timeLabel, timeEdit);
-    groupBox->setLayout(layout);
-    groupBox->setFixedSize(375, 58);
-    groupBox->move(0, 121);
-//    addWidget(groupBox);
-
-//    QTableWidgetItem* headerh = new QTableWidgetItem("id");
-//    tablewidget->setHorizontalHeaderItem(0, headerh);
-//    QTableWidgetItem *cubesHeaderItem = new QTableWidgetItem(tr("Cubes"));
-//    cubesHeaderItem->setIcon(QIcon(QPixmap("png/flow_process.png")));
-//    cubesHeaderItem->setTextAlignment(Qt::AlignVCenter);
-//    tablewidget->setHorizontalHeaderItem(0, cubesHeaderItem);
-//    auto w = addWidget(tablewidget);
-//    w->moveBy(0, 140);
     return true;
 }
 
@@ -299,55 +250,55 @@ void canvas_scene::draw_table_text(QPainter *painter)
     QFont font("宋体", 12);
     painter->setFont(font);
 
-    /*表二 各列的标题*/
-    painter->drawText(QRectF(second_table_topleft.x(), second_table_topleft.y(),
-                             serial_number_width_, 2 * line_height_),
-                      Qt::AlignCenter, tr("序号"));
-    painter->drawText(QRectF(second_table_topleft.x() + serial_number_width_,
-                             second_table_topleft.y(),job_content_width_, 2 * line_height_),
-                      Qt::AlignCenter, tr("工作说明"));
-    painter->drawText(QRectF(second_table_topleft.x() + serial_number_width_ + job_content_width_,
-                             second_table_topleft.y(),
-                             distance_width_, 2 * line_height_), Qt::AlignCenter, tr("距离"));
-    const auto offset = 2;
-    {
-        painter->save();
-        QFont font("宋体", 10);
-        painter->setFont(font);
+//    /*表二 各列的标题*/
+//    painter->drawText(QRectF(second_table_topleft.x(), second_table_topleft.y(),
+//                             serial_number_width_, 2 * line_height_),
+//                      Qt::AlignCenter, tr("序号"));
+//    painter->drawText(QRectF(second_table_topleft.x() + serial_number_width_,
+//                             second_table_topleft.y(),job_content_width_, 2 * line_height_),
+//                      Qt::AlignCenter, tr("工作说明"));
+//    painter->drawText(QRectF(second_table_topleft.x() + serial_number_width_ + job_content_width_,
+//                             second_table_topleft.y(),
+//                             distance_width_, 2 * line_height_), Qt::AlignCenter, tr("距离"));
+//    const auto offset = 2;
+//    {
+//        painter->save();
+//        QFont font("宋体", 10);
+//        painter->setFont(font);
 
-        painter->drawText(QRectF(second_table_topleft.x() + serial_number_width_ +
-                                 job_content_width_ + offset,
-                          second_table_topleft.y() + line_height_ + line_height_ / 2 - 2 * offset,
-                                 distance_width_ / 2, line_height_ /2),
-                          Qt::AlignCenter, tr("单位:"));
-        painter->drawText(QRectF(second_table_topleft.x() + serial_number_width_ +
-                                 job_content_width_ + distance_width_ +offset,
-                          second_table_topleft.y() + line_height_ + line_height_ / 2 - 2 * offset,
-                                 time_width_ / 2, line_height_ /2),
-                          Qt::AlignCenter, tr("单位:"));
-        painter->restore();
-    }
-    painter->drawText(QRectF(second_table_topleft.x() + serial_number_width_ +
-                             job_content_width_ + distance_width_,
-                             second_table_topleft.y(),
-                             time_width_, 2 * line_height_), Qt::AlignCenter, tr("时间"));
+//        painter->drawText(QRectF(second_table_topleft.x() + serial_number_width_ +
+//                                 job_content_width_ + offset,
+//                          second_table_topleft.y() + line_height_ + line_height_ / 2 - 2 * offset,
+//                                 distance_width_ / 2, line_height_ /2),
+//                          Qt::AlignCenter, tr("单位:"));
+//        painter->drawText(QRectF(second_table_topleft.x() + serial_number_width_ +
+//                                 job_content_width_ + distance_width_ +offset,
+//                          second_table_topleft.y() + line_height_ + line_height_ / 2 - 2 * offset,
+//                                 time_width_ / 2, line_height_ /2),
+//                          Qt::AlignCenter, tr("单位:"));
+//        painter->restore();
+//    }
+//    painter->drawText(QRectF(second_table_topleft.x() + serial_number_width_ +
+//                             job_content_width_ + distance_width_,
+//                             second_table_topleft.y(),
+//                             time_width_, 2 * line_height_), Qt::AlignCenter, tr("时间"));
     painter->drawText(QRectF(second_table_topleft.x() + width_ / 2,
                              second_table_topleft.y(), width_ / 2, line_height_),
                              Qt::AlignCenter, tr("符号"));
 
-    /*表二 序号部分*/
-    for(int i = 1; i <= second_table_row_size_; i++)
-    {
-        painter->save();
-        QFont font("宋体", 10);
-        painter->setFont(font);
-        auto serial_num = QString::number(i);
-        painter->drawText(QRectF(second_table_topleft.x() ,
-                                 second_table_topleft.y() + (i + 1) * line_height_,
-                                 serial_number_width_, line_height_),
-                          Qt::AlignCenter, serial_num);
-        painter->restore();
-    }
+//    /*表二 序号部分*/
+//    for(int i = 1; i <= second_table_row_size_; i++)
+//    {
+//        painter->save();
+//        QFont font("宋体", 10);
+//        painter->setFont(font);
+//        auto serial_num = QString::number(i);
+//        painter->drawText(QRectF(second_table_topleft.x() ,
+//                                 second_table_topleft.y() + (i + 1) * line_height_,
+//                                 serial_number_width_, line_height_),
+//                          Qt::AlignCenter, serial_num);
+//        painter->restore();
+//    }
 
     /*表一 前半张表各行的内容*/
     {
@@ -363,11 +314,13 @@ void canvas_scene::draw_table_text(QPainter *painter)
                                  line_height_), Qt::AlignCenter, tr("次数"));
         painter->drawText(QRectF(first_table_rect.x(),
                                  first_table_rect.y() + 2 * line_height_, width_ / 2,
-                                 line_height_), Qt::AlignCenter, "时间单位:" + edit_time_unit_->text ());
+                                 line_height_), Qt::AlignCenter, "时间单位:" + time_unit());
+//                                 line_height_), Qt::AlignCenter, "时间单位:" + edit_time_unit_->text ());
 
         painter->drawText(QRectF(first_table_rect.x(),
                                  first_table_rect.y() + 3 * line_height_, width_ / 2,
-                                 line_height_), Qt::AlignCenter, "距离单位:"  + edit_distance_unit_->text ());
+                                 line_height_), Qt::AlignCenter, "距离单位:" + distance_unit());
+//                                 line_height_), Qt::AlignCenter, "距离单位:"  + edit_distance_unit_->text ());
 
         QPointF symbol_table_topleft(first_table_rect.x() + width_ / 2,
                                      first_table_rect.y() );
@@ -494,112 +447,168 @@ void canvas_scene::draw_symbol(QPainter *painter)
     }
 }
 
-void canvas_scene::set_lineedit()
+//void canvas_scene::set_lineedit()
+//{
+//    const auto first_table_rect = QRectF(top_left.x() + offset_topleft_width_,
+//                                         top_left.y() + offset_topleft_height_,
+//                                         width_, first_table_height_);
+//    const auto second_table_topleft =  QPointF(first_table_rect.bottomLeft().x() ,
+//                                         first_table_rect.bottomLeft().y() + 20);
+//    const auto offset = 2;
+//    for(int row = 0; row < second_table_row_size_; row++)
+//    {
+//        size_t col = 0;
+//        const auto u_row = static_cast<size_t> (row);
+//        {
+//            auto edit = std::make_unique<QLineEdit> ();
+
+//            edit->setFont(QFont("宋体", 10));
+
+//            connect(edit.get(), &QLineEdit::textChanged, [this](){ emit scene_changed(); });
+
+//            edit->resize (job_content_width_ - offset, line_height_ - offset);
+//            second_table_edit_.at(u_row).at(col) = edit.get();
+
+//            auto proxy = addWidget (edit.release());
+//            proxy->setPos(second_table_topleft + QPointF (offset_topleft_width_, offset_topleft_height_)
+//                           + QPointF (serial_number_width_, 2 * line_height_)
+//                           + QPointF (0, row * line_height_) + QPointF (offset, offset));
+//        }
+//        col ++;
+
+//        {
+
+//            auto edit = std::make_unique<QLineEdit> ();
+
+//            edit->setFont(QFont("宋体", 10));
+//            edit->setAlignment(Qt::AlignCenter);
+
+//            connect(edit.get(), &QLineEdit::textChanged, [this](){ emit scene_changed(); });
+
+
+//            edit->resize (distance_width_ - offset, line_height_ - offset);
+//            second_table_edit_.at(u_row).at(col) = edit.get();
+//            auto proxy = addWidget (edit.release());
+//            proxy->setPos(second_table_topleft + QPointF (offset_topleft_width_, offset_topleft_height_) +
+//                           QPointF (serial_number_width_, 2 * line_height_) +
+//                           QPointF (job_content_width_, row * line_height_) + QPointF (offset, offset));
+
+//        }
+//        col ++;
+
+//        {
+//            auto edit = std::make_unique<QLineEdit> ();
+
+//            edit->setFont(QFont("宋体", 10));
+//            edit->setAlignment(Qt::AlignCenter);
+
+//            connect(edit.get(), &QLineEdit::textChanged, [this](){ emit scene_changed(); });
+
+//            edit->resize (time_width_ - offset, line_height_ - offset);
+//            second_table_edit_.at(u_row).at(col) = edit.get();
+
+//            auto proxy = addWidget (edit.release());
+//            proxy->setPos(second_table_topleft + QPointF (offset_topleft_width_, offset_topleft_height_) +
+//                           QPointF (serial_number_width_, 2 * line_height_) +
+//                           QPointF (job_content_width_ + distance_width_, row * line_height_) +
+//                           QPointF (offset, offset));
+//        }
+//        col ++;
+//    }
+
+//    /*距离单位edit*/
+//    {
+//        auto edit = std::make_unique<QLineEdit> ();
+
+//        edit->setFont(QFont("宋体", 10));
+//        edit->setAlignment(Qt::AlignCenter);
+
+//        connect(edit.get(), &QLineEdit::textChanged, [this](){ emit scene_changed(); });
+
+//        edit->resize(distance_width_ / 2 - 2 * offset, static_cast<int>(line_height_ / 1.5 - offset));
+//        edit_distance_unit_ = edit.get();
+//        //unit_edit_.at(static_cast<size_t>(0)) = edit.get();
+
+//        auto proxy = addWidget(edit.release());
+//        proxy->setPos(second_table_topleft.x() + serial_number_width_ + job_content_width_ + distance_width_ / 2 +offset,
+//                      second_table_topleft.y() + line_height_ + line_height_ / 2 - 2 * offset);
+//    }
+
+//    /*时间单位edit*/
+//    {
+//        auto edit = std::make_unique<QLineEdit> ();
+
+//        edit->setFont(QFont("宋体", 10));
+//        edit->setAlignment(Qt::AlignCenter);
+
+//        connect(edit.get(), &QLineEdit::textChanged, [this](){ emit scene_changed(); });
+
+//        edit->resize(time_width_ / 2 - 2 * offset, static_cast<int>(line_height_ / 1.5 - offset));
+//        edit_time_unit_ = edit.get();
+//        //unit_edit_.at(static_cast<size_t>(1)) = edit.get();
+
+//        auto proxy = addWidget(edit.release());
+//        proxy->setPos(second_table_topleft.x() + serial_number_width_ +
+//                      job_content_width_ + distance_width_ + time_width_ / 2 + offset,
+//                      second_table_topleft.y() + line_height_  + line_height_ / 2 - 2 * offset);
+//    }
+//}
+
+void canvas_scene::set_table()
 {
-    const auto first_table_rect = QRectF(top_left.x() + offset_topleft_width_,
-                                         top_left.y() + offset_topleft_height_,
-                                         width_, first_table_height_);
-    const auto second_table_topleft =  QPointF(first_table_rect.bottomLeft().x() ,
-                                         first_table_rect.bottomLeft().y() + 20);
-    const auto offset = 2;
-    for(int row = 0; row < second_table_row_size_; row++)
-    {
-        size_t col = 0;
-        const auto u_row = static_cast<size_t> (row);
-        {
-            auto edit = std::make_unique<QLineEdit> ();
+    tablewidget_ = new embed_table(25, 3);
 
-            edit->setFont(QFont("宋体", 10));
+    QStringList header;
+    header << "工作说明" << "距离" << "时间";
+    tablewidget_->setHorizontalHeaderLabels(header);
+//    QTableWidgetItem*  job_description = new QTableWidgetItem("工作说明");
+//    tablewidget_->setHorizontalHeaderItem(0, job_description);
 
-            connect(edit.get(), &QLineEdit::textChanged, [this](){ emit scene_changed(); });
+    tablewidget_->move(0, 140);
+    tablewidget_->resize(375, 810);
 
-            edit->resize (job_content_width_ - offset, line_height_ - offset);
-            second_table_edit_.at(u_row).at(col) = edit.get();
-
-            auto proxy = addWidget (edit.release());
-            proxy->setPos(second_table_topleft + QPointF (offset_topleft_width_, offset_topleft_height_)
-                           + QPointF (serial_number_width_, 2 * line_height_)
-                           + QPointF (0, row * line_height_) + QPointF (offset, offset));
-        }
-        col ++;
-
-        {
-
-            auto edit = std::make_unique<QLineEdit> ();
-
-            edit->setFont(QFont("宋体", 10));
-            edit->setAlignment(Qt::AlignCenter);
-
-            connect(edit.get(), &QLineEdit::textChanged, [this](){ emit scene_changed(); });
-
-
-            edit->resize (distance_width_ - offset, line_height_ - offset);
-            second_table_edit_.at(u_row).at(col) = edit.get();
-            auto proxy = addWidget (edit.release());
-            proxy->setPos(second_table_topleft + QPointF (offset_topleft_width_, offset_topleft_height_) +
-                           QPointF (serial_number_width_, 2 * line_height_) +
-                           QPointF (job_content_width_, row * line_height_) + QPointF (offset, offset));
-
-        }
-        col ++;
-
-        {
-            auto edit = std::make_unique<QLineEdit> ();
-
-            edit->setFont(QFont("宋体", 10));
-            edit->setAlignment(Qt::AlignCenter);
-
-            connect(edit.get(), &QLineEdit::textChanged, [this](){ emit scene_changed(); });
-
-            edit->resize (time_width_ - offset, line_height_ - offset);
-            second_table_edit_.at(u_row).at(col) = edit.get();
-
-            auto proxy = addWidget (edit.release());
-            proxy->setPos(second_table_topleft + QPointF (offset_topleft_width_, offset_topleft_height_) +
-                           QPointF (serial_number_width_, 2 * line_height_) +
-                           QPointF (job_content_width_ + distance_width_, row * line_height_) +
-                           QPointF (offset, offset));
-        }
-        col ++;
-    }
-
-    /*距离单位edit*/
-    {
-        auto edit = std::make_unique<QLineEdit> ();
-
-        edit->setFont(QFont("宋体", 10));
-        edit->setAlignment(Qt::AlignCenter);
-
-        connect(edit.get(), &QLineEdit::textChanged, [this](){ emit scene_changed(); });
-
-        edit->resize(distance_width_ / 2 - 2 * offset, static_cast<int>(line_height_ / 1.5 - offset));
-        edit_distance_unit_ = edit.get();
-        //unit_edit_.at(static_cast<size_t>(0)) = edit.get();
-
-        auto proxy = addWidget(edit.release());
-        proxy->setPos(second_table_topleft.x() + serial_number_width_ + job_content_width_ + distance_width_ / 2 +offset,
-                      second_table_topleft.y() + line_height_ + line_height_ / 2 - 2 * offset);
-    }
-
-    /*时间单位edit*/
-    {
-        auto edit = std::make_unique<QLineEdit> ();
-
-        edit->setFont(QFont("宋体", 10));
-        edit->setAlignment(Qt::AlignCenter);
-
-        connect(edit.get(), &QLineEdit::textChanged, [this](){ emit scene_changed(); });
-
-        edit->resize(time_width_ / 2 - 2 * offset, static_cast<int>(line_height_ / 1.5 - offset));
-        edit_time_unit_ = edit.get();
-        //unit_edit_.at(static_cast<size_t>(1)) = edit.get();
-
-        auto proxy = addWidget(edit.release());
-        proxy->setPos(second_table_topleft.x() + serial_number_width_ +
-                      job_content_width_ + distance_width_ + time_width_ / 2 + offset,
-                      second_table_topleft.y() + line_height_  + line_height_ / 2 - 2 * offset);
-    }
+    tablewidget_->horizontalHeader()->setFixedHeight(60);
+    tablewidget_->verticalHeader()->setFixedWidth(45);
+    tablewidget_->verticalHeader()->setDefaultAlignment(Qt::AlignCenter);
+    tablewidget_->verticalHeader()->setDefaultSectionSize(30);
+    tablewidget_->setColumnWidth(0, 150);
+    tablewidget_->setColumnWidth(1, 90);
+    tablewidget_->setColumnWidth(2, 90);
+    tablewidget_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    tablewidget_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    addWidget(tablewidget_);
 }
+
+//void canvas_scene::set_unit()
+//{
+////    QGroupBox *groupBox = new QGroupBox("单位设置");
+//    QWidget* widget = new QWidget;
+//    QLabel *timeLabel = new QLabel("时间单位:");
+////    timeLabel->resize(45, 30);
+////    timeLabel->setFixedSize(45, 30);
+//    QLineEdit *timeEdit = new QLineEdit;
+////    timeEdit->resize(45, 30);
+////    timeEdit->setFixedSize(45, 30);
+
+//    QLabel *distanceLabel = new QLabel("距离单位:");
+////    distanceLabel->resize(45, 30);
+//    QLineEdit *distanceEdit = new QLineEdit;
+////    distanceEdit->resize(45, 30);
+
+//    QFormLayout *layout = new QFormLayout;
+////    layout->addWidget(distanceLabel);
+////    layout->addWidget(distanceEdit);
+////    layout->addWidget(timeLabel);
+////    layout->addWidget(timeEdit);
+
+//    layout->addRow(distanceLabel, distanceEdit);
+//    layout->addRow(timeLabel, timeEdit);
+//    widget->setLayout(layout);
+////    groupBox->setFixedSize(375, 58);
+//    widget->move(750, 140);
+//    addWidget(widget);
+
+//}
 
 void canvas_scene::add_symbol_item()
 {

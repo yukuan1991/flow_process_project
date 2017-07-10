@@ -3,18 +3,25 @@
 #include <QLineEdit>
 #include "item/symbol_item.h"
 #include <QCloseEvent>
+#include <QDebug>
 
 using nlohmann::json;
 
 bool canvas_view::init()
 {
-    this->setScene(scene_.get());
+    auto ptr_scene = scene_.get();
+    this->setScene(ptr_scene);
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
-    connect (scene_.get(), &canvas_scene::scene_changed, [this]{ unsaved_content_ = true; });
+    connect (ptr_scene, &canvas_scene::scene_changed, [this]{ unsaved_content_ = true; });
     //connect (scene_.get(), &canvas_scene::scene_changed, [this]{ qDebug() << "unsaved_content_"; });
     connect (this, &canvas_view::saved, [this]{ unsaved_content_ = false; });
     //connect (this, &canvas_view::saved, [this]{ qDebug() << "saved_content_"; });
+
+    connect (this, &canvas_view::time_unit_changed, [ptr_scene] (const QString& s) { ptr_scene->set_time_unit(s); });
+    connect (this, &canvas_view::distance_unit_changed, [ptr_scene] (const QString& s) { ptr_scene->set_distance_unit(s); });
+
+    connect (this, &canvas_view::time_unit_changed, [] (const QString& s) { qDebug() << "canvas_view: " << s; });
 
     return true;
 }

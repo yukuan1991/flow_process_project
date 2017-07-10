@@ -8,11 +8,16 @@
 #include <QFileDialog>
 #include <base/io/file/file.hpp>
 #include <base/utils/charset.hpp>
+#include "interface_control/time_unit_dlg.h"
+#include "interface_control/distance_unit_dlg.h"
+
 #include <QDebug>
 
 flow_process::flow_process(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::flow_process)
+    ui(new Ui::flow_process),
+    time_(new time_unit_dlg(this)),
+    distance_(new distance_unit_dlg(this))
 {
     ui->setupUi(this);
     ui->mdiarea->setViewMode(QMdiArea::TabbedView);
@@ -158,6 +163,16 @@ void flow_process::file_print()
     }
 }
 
+void flow_process::set_time_unit()
+{
+    time_->exec();
+}
+
+void flow_process::set_distance_unit()
+{
+    distance_->exec();
+}
+
 void flow_process::help_advice()
 {
     const QString text = R"(<html><head/><body><p>如果您有任何需求与改进建议，</p><p>请随时联系IEToolkit君qq3350436646</p>
@@ -176,6 +191,9 @@ canvas_view *flow_process::create_canvas_view()
     canvas->setWindowState(Qt::WindowMaximized);
 
     ui->mdiarea->addSubWindow(canvas.release());
+    connect(time_, &time_unit_dlg::currenttextchanged, ptr_canvas, &canvas_view::time_unit_changed);
+    connect(distance_, &distance_unit_dlg::currenttextchanged, ptr_canvas, &canvas_view::distance_unit_changed);
+
 //    connect(ptr_canvas, &canvas_view::view_closed, this, &flow_process::on_view_closed, Qt::QueuedConnection);
     return ptr_canvas;
 }
@@ -196,7 +214,8 @@ canvas_view *flow_process::active_canvas_view()
 void flow_process::init_conn()
 {
     connect(ui->flowprocess_ribbon, &flow_process_ribbon::file_menu_triggered, [this] (const QString & s) { file_operations(s); });
-//    connect(ui->flowprocess_ribbon, &flow_process_ribbon::help, []  { qDebug() << "help"; });
+    connect(ui->flowprocess_ribbon, &flow_process_ribbon::time_unit, this, &flow_process::set_time_unit);
+    connect(ui->flowprocess_ribbon, &flow_process_ribbon::distance_unit, this, &flow_process::set_distance_unit);
     connect(ui->flowprocess_ribbon, &flow_process_ribbon::help, this, &flow_process::help_advice);
     connect(ui->mdiarea, &QMdiArea::subWindowActivated, this, &flow_process::set_button_enabled);
 

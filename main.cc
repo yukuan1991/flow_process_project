@@ -5,7 +5,8 @@
 #include <QStyleFactory>
 #include <boost/range/adaptors.hpp>
 #include "interface_control/flow_process_ribbon.h"
-
+#include "interface_control/time_unit_dlg.h"
+#include "interface_control/distance_unit_dlg.h"
 
 void set_style ()
 {
