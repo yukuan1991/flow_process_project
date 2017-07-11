@@ -408,27 +408,28 @@ void canvas_scene::draw_symbol(QPainter *painter)
 
 void canvas_scene::set_table()
 {
-    tablewidget_ = new QTableWidget(25, 3);
+    tablewidget_ = new QTableWidget(second_table_row_size_, second_table_front_col);
 
     QStringList header;
     header << "工作说明" << "距离" << "时间";
     tablewidget_->setHorizontalHeaderLabels(header);
 
-    tablewidget_->move(0, 140);
-    tablewidget_->resize(375, 810);
+    const auto offset = 20;
+    tablewidget_->move(0, first_table_height_ + offset);
+    tablewidget_->resize(width_ / 2, second_table_height_);
 
-    tablewidget_->horizontalHeader()->setFixedHeight(60);
-    tablewidget_->verticalHeader()->setFixedWidth(45);
+    tablewidget_->horizontalHeader()->setFixedHeight(line_height_ * 2);
+    tablewidget_->verticalHeader()->setFixedWidth(serial_number_width_);
     tablewidget_->verticalHeader()->setDefaultAlignment(Qt::AlignCenter);
-    tablewidget_->verticalHeader()->setDefaultSectionSize(30);
-    tablewidget_->setColumnWidth(0, 150);
-    tablewidget_->setColumnWidth(1, 90);
-    tablewidget_->setColumnWidth(2, 90);
+    tablewidget_->verticalHeader()->setDefaultSectionSize(line_height_);
+    tablewidget_->setColumnWidth(0, job_content_width_);
+    tablewidget_->setColumnWidth(1, distance_width_);
+    tablewidget_->setColumnWidth(2, time_width_);
     tablewidget_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     tablewidget_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     addWidget(tablewidget_);
 
-    for (int i = 0; i < 25; i ++)
+    for (int i = 0; i < second_table_row_size_; i ++)
     {
         tablewidget_->setItem(i, 0, new QTableWidgetItem);
         tablewidget_->setItem(i, 1, new QTableWidgetItem);
