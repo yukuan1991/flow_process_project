@@ -9,8 +9,8 @@ signals:
     void copy();
     void paste();
     void del();
-    void time_unit();
-    void distance_unit();
+    void time_unit_exec();
+    void distance_unit_exec();
     void help();
 public:
     flow_process_ribbon(QWidget * parent = nullptr);

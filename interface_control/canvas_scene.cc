@@ -58,11 +58,25 @@ bool canvas_scene::init()
     add_symbol_item();
     set_table();
 
+    dlg_time_unit_ = make_unique<time_unit_dlg> ();
+    dlg_distance_unit_ = make_unique<distance_unit_dlg> ();
+
+    connect(dlg_time_unit_.get(), &time_unit_dlg::destroyed, [] (QObject* o) { qDebug() << o; });
 
     //connect (this, &canvas_scene::scene_changed, [this] () { qDebug() << "scene changed"; });
 
 
     return true;
+}
+
+void canvas_scene::time_unit_exec()
+{
+    dlg_time_unit_->exec();
+}
+
+void canvas_scene::distance_unit_exec()
+{
+    dlg_distance_unit_->exec();
 }
 
 string canvas_scene::dump()
@@ -72,8 +86,8 @@ string canvas_scene::dump()
 //    using std::begin;
 
     json data;
-    data ["单位"]["时间"] = time_unit().toStdString ();
-    data ["单位"]["距离"] = distance_unit().toStdString ();
+    data ["单位"]["时间"] = dlg_time_unit_->currentText().toStdString ();
+    data ["单位"]["距离"] = dlg_distance_unit_->currentText().toStdString ();
 
     data ["数据"] = json::array ();
     for (int row = 0; row < second_table_row_size_; row ++)
@@ -110,9 +124,10 @@ bool canvas_scene::load(const string &data) try
     std::string time_unit = content["单位"]["时间"];
     std::string distance_unit = content["单位"]["距离"];
 
-    emit load_time_unit(time_unit.data());
-    emit load_distance_unit(distance_unit.data());
-
+//    emit load_time_unit(time_unit.data());
+//    emit load_distance_unit(distance_unit.data());
+    dlg_distance_unit_->set_unit(distance_unit.data());
+    dlg_time_unit_->set_unit(time_unit.data());
 //    edit_distance_unit_->setText(distance_unit.data());
 //    edit_time_unit_->setText (time_unit.data ());
 
@@ -273,11 +288,11 @@ void canvas_scene::draw_table_text(QPainter *painter)
                                  line_height_), Qt::AlignCenter, tr("次数"));
         painter->drawText(QRectF(first_table_rect.x(),
                                  first_table_rect.y() + 2 * line_height_, width_ / 2,
-                                 line_height_), Qt::AlignCenter, "距离单位:" + distance_unit());
+                                 line_height_), Qt::AlignCenter, "距离单位:" + dlg_distance_unit_->currentText());
 
         painter->drawText(QRectF(first_table_rect.x(),
                                  first_table_rect.y() + 3 * line_height_, width_ / 2,
-                                 line_height_), Qt::AlignCenter, "时间单位:" + time_unit());
+                                 line_height_), Qt::AlignCenter, "时间单位:" + dlg_time_unit_->currentText());
 
         QPointF symbol_table_topleft(first_table_rect.x() + width_ / 2,
                                      first_table_rect.y() );
@@ -541,6 +556,7 @@ void canvas_scene::set_table()
         tablewidget_->setItem(i, 1, new QTableWidgetItem);
         tablewidget_->setItem(i, 2, new QTableWidgetItem);
     }
+
 }
 
 //void canvas_scene::set_unit()

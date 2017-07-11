@@ -23,6 +23,11 @@ time_unit_dlg::time_unit_dlg(QWidget *parent, Qt::WindowFlags f)
 
 }
 
+QString time_unit_dlg::currentText() const
+{
+    return unit_->currentText();
+}
+
 
 
 

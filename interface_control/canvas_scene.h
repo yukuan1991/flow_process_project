@@ -2,6 +2,8 @@
 #include <QGraphicsScene>
 #include <memory>
 #include <vector>
+#include "time_unit_dlg.h"
+#include "distance_unit_dlg.h"
 
 using std::unique_ptr;
 using std::make_unique;
@@ -9,21 +11,16 @@ class symbol_item;
 class QLineEdit;
 class embed_table;
 
+
 class canvas_scene : public QGraphicsScene
 {
     Q_OBJECT
 signals:
     void item_selection_changed (int row, int col, bool selected);
     void scene_changed();
-    void load_time_unit(const QString &s);
-    void load_distance_unit(const QString &s);
 public:
-    void set_time_unit(const QString & s) { time_unit_text_ = s; }
-    void set_distance_unit(const QString & s) { distance_unit_text_ = s; }
-
-    const QString & time_unit() { return time_unit_text_; }
-    const QString & distance_unit() { return distance_unit_text_; }
-
+    void time_unit_exec();
+    void distance_unit_exec();
 public:
     template<typename ... ARGS> static unique_ptr<canvas_scene> make (ARGS && ...args);
 
@@ -41,7 +38,6 @@ protected:
     canvas_scene(ARGS && ... args) : QGraphicsScene(std::forward<ARGS> (args)...) {}
 
     bool init();
-    //void set_lineedit();
     void set_table();
     void add_symbol_item();
 
@@ -58,13 +54,13 @@ private:
 
 private:
     std::vector<std::vector<QLineEdit*>> second_table_edit_;
-//    QLineEdit* edit_distance_unit_;
-//    QLineEdit* edit_time_unit_;
     std::vector<std::vector<symbol_item*>> icons_;
 
     embed_table* tablewidget_;
-    QString time_unit_text_ = "";
-    QString distance_unit_text_ = "";
+//    QString time_unit_text_ = "";
+//    QString distance_unit_text_ = "";
+    unique_ptr<time_unit_dlg> dlg_time_unit_;
+    unique_ptr<distance_unit_dlg> dlg_distance_unit_;
 private:
     QRectF print_rect_;
 private:

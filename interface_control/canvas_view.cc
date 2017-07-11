@@ -18,13 +18,15 @@ bool canvas_view::init()
     connect (this, &canvas_view::saved, [this]{ unsaved_content_ = false; });
     //connect (this, &canvas_view::saved, [this]{ qDebug() << "saved_content_"; });
 
-    connect (this, &canvas_view::time_unit_changed, [ptr_scene] (const QString& s) { ptr_scene->set_time_unit(s); });
-    connect (this, &canvas_view::distance_unit_changed, [ptr_scene] (const QString& s) { ptr_scene->set_distance_unit(s); });
+//    connect (this, &canvas_view::time_unit_changed, [ptr_scene] (const QString& s) { ptr_scene->set_time_unit(s); });
+//    connect (this, &canvas_view::distance_unit_changed, [ptr_scene] (const QString& s) { ptr_scene->set_distance_unit(s); });
 
-    connect (ptr_scene, &canvas_scene::load_time_unit, this, &canvas_view::load_time_unit);
-    connect (ptr_scene, &canvas_scene::load_distance_unit, this, &canvas_view::load_distance_unit);
+//    connect (ptr_scene, &canvas_scene::load_time_unit, this, &canvas_view::load_time_unit);
+//    connect (ptr_scene, &canvas_scene::load_distance_unit, this, &canvas_view::load_distance_unit);
 
-    connect (this, &canvas_view::time_unit_changed, [] (const QString& s) { qDebug() << "canvas_view: " << s; });
+//    connect (this, &canvas_view::time_unit_changed, [] (const QString& s) { qDebug() << "canvas_view: " << s; });
+    connect(this, &canvas_view::time_unit_exec, ptr_scene, &canvas_scene::time_unit_exec);
+    connect(this, &canvas_view::distance_unit_exec, ptr_scene, &canvas_scene::distance_unit_exec);
 
     return true;
 }

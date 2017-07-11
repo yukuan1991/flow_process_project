@@ -14,6 +14,9 @@ class flow_process;
 class flow_process : public QWidget
 {
     Q_OBJECT
+signals:
+    void time_unit_exec();
+    void distance_unit_exec();
 public:
     explicit flow_process(QWidget *parent = 0);
     ~flow_process();
@@ -29,16 +32,12 @@ private:
     void save_subwindow(QMdiSubWindow* sub_window);
     void file_print();
 private:
-    void set_time_unit();
-    void set_distance_unit();
     void help_advice();
 private:
     canvas_view* create_canvas_view();
     canvas_view* active_canvas_view();
 private:
     Ui::flow_process *ui;
-    time_unit_dlg* time_;
-    distance_unit_dlg* distance_;
 };
 
 #endif // FLOW_PROCESS_H

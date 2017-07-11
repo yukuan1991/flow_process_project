@@ -51,8 +51,8 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
     connect(paste_, &ribbon_tool::clicked, this, &flow_process_ribbon::paste);
     connect(del_, &ribbon_tool::clicked, this, &flow_process_ribbon::del);
 
-    connect(time_unit_, &ribbon_tool::clicked, this, &flow_process_ribbon::time_unit);
-    connect(distance_unit_, &ribbon_tool::clicked, this, &flow_process_ribbon::distance_unit);
+    connect(time_unit_, &ribbon_tool::clicked, this, &flow_process_ribbon::time_unit_exec);
+    connect(distance_unit_, &ribbon_tool::clicked, this, &flow_process_ribbon::distance_unit_exec);
 
     connect (this, &flow_process_ribbon::set_enabled, cut_, &ribbon_tool::setEnabled);
     connect (this, &flow_process_ribbon::set_enabled, copy_, &ribbon_tool::setEnabled);
