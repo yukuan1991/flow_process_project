@@ -434,7 +434,12 @@ void canvas_scene::set_table()
         tablewidget_->setItem(i, 0, new QTableWidgetItem);
         tablewidget_->setItem(i, 1, new QTableWidgetItem);
         tablewidget_->setItem(i, 2, new QTableWidgetItem);
+        tablewidget_->item(i, 0)->setTextAlignment(Qt::AlignCenter);
+        tablewidget_->item(i, 1)->setTextAlignment(Qt::AlignCenter);
+        tablewidget_->item(i, 2)->setTextAlignment(Qt::AlignCenter);
     }
+
+//    tablewidget_->hide();
 
 }
 
