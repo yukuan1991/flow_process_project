@@ -36,9 +36,6 @@ void wait_item::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     QFont font("Dotum", 17);
     painter->setFont(font);
     painter->setPen(is_selected() ? selected_color() : unselected_color());
-    int startAngle = 90 * 16;
-    int spanAngle = -180 * 16;
 
-//    painter->drawChord(boundingRect(), startAngle, spanAngle);
     painter->drawText(boundingRect(), Qt::AlignCenter, "D");
 }

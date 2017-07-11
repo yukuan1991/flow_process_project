@@ -122,12 +122,8 @@ bool canvas_scene::load(const string &data) try
     std::string time_unit = content["单位"]["时间"];
     std::string distance_unit = content["单位"]["距离"];
 
-//    emit load_time_unit(time_unit.data());
-//    emit load_distance_unit(distance_unit.data());
     dlg_distance_unit_->set_unit(distance_unit.data());
     dlg_time_unit_->set_unit(time_unit.data());
-//    edit_distance_unit_->setText(distance_unit.data());
-//    edit_time_unit_->setText (time_unit.data ());
 
     auto & table = content["数据"];
 

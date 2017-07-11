@@ -217,9 +217,6 @@ canvas_view *flow_process::create_canvas_view()
 
     connect(ptr_canvas, &canvas_view::load_hide_state, this, &flow_process::load_hide_state);
 
-    //connect(this, &flow_process::time_unit_exec, ptr_canvas, &canvas_view::time_unit_exec);
-//    connect(this, &flow_process::distance_unit_exec, ptr_canvas, &canvas_view::distance_unit_exec);
-
 //    connect(ptr_canvas, &canvas_view::view_closed, this, &flow_process::on_view_closed, Qt::QueuedConnection);
     return ptr_canvas;
 }

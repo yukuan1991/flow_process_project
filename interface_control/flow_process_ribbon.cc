@@ -63,6 +63,7 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
     connect(hide_, &ribbon_tool::clicked, this, &flow_process_ribbon::hide_clicked);
 
     connect(this, &flow_process_ribbon::set_hide_checked, hide_, &ribbon_tool::setChecked);
+    connect(hide_, &ribbon_tool::toggled, this, &flow_process_ribbon::hide_clicked);
 
     connect (this, &flow_process_ribbon::set_enabled, cut_, &ribbon_tool::setEnabled);
     connect (this, &flow_process_ribbon::set_enabled, copy_, &ribbon_tool::setEnabled);
