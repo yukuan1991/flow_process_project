@@ -32,7 +32,7 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
         setting[0] = ::move (b);
 
         b.add ("隐藏", QPixmap ("png/隐藏.png"), hide_);
-        b.set_title("设置窗口");
+        b.set_title("设置图标");
 
         setting[1] = ::move (b);
 

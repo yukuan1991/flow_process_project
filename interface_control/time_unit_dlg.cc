@@ -18,7 +18,7 @@ time_unit_dlg::time_unit_dlg(QWidget *parent, Qt::WindowFlags f)
     layout->addWidget(unit_);
     setLayout(layout);
 
-    connect(unit_, &QComboBox::currentTextChanged, [](const QString & s) { qDebug() << s; });
+//    connect(unit_, &QComboBox::currentTextChanged, [](const QString & s) { qDebug() << s; });
     connect(unit_, &QComboBox::currentTextChanged, this, &time_unit_dlg::currenttextchanged);
 
 }

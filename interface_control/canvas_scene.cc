@@ -17,7 +17,7 @@
 #include <QDebug>
 #include <QHeaderView>
 
-const QPointF canvas_scene::top_left = QPointF (0, 0);
+const QPointF canvas_scene::top_left = QPointF (5, 5);
 
 using std::begin;
 using std::string;
@@ -40,7 +40,7 @@ bool canvas_scene::init()
     setSceneRect(0, 0, 1500, 1000);
 
     const auto offset = 20;
-    print_rect_ = QRectF(0, 0, width_, line_height_ * 31 + offset);
+    print_rect_ = QRectF(0, 0, width_ + 2 * top_left.x(), line_height_ * 31 + offset + 2 * top_left.y());
 
     add_symbol_item();
     set_table();
@@ -171,11 +171,11 @@ void canvas_scene::draw_table(QPainter *painter)
     painter->drawRect(first_table_rect);
 
     /*表一、表二的上下间隔为20*/
-    const auto second_table_topleft =  QPointF(first_table_rect.bottomLeft().x() ,
+    const auto second_table_topleft =  QPointF(first_table_rect.bottomLeft().x() + width_ / 2,
                                          first_table_rect.bottomLeft().y() + 20);
     const auto second_table_rect = QRectF(second_table_topleft.x(),
                                           second_table_topleft.y(),
-                                          width_, second_table_height_);
+                                          width_ / 2, second_table_height_);
 
     painter->drawRect(second_table_rect);
 
@@ -192,46 +192,46 @@ void canvas_scene::draw_table(QPainter *painter)
     /*表二的横线*/
     painter->drawLine(QPointF(second_table_rect.x(),
                               second_table_rect.y() + 2 * line_height_),
-                      QPointF(second_table_rect.x() + width_,
+                      QPointF(second_table_rect.x() + width_ / 2,
                               second_table_rect.y() + 2 * line_height_));
-    painter->drawLine(QPointF(second_table_rect.x() + width_ / 2,
+    painter->drawLine(QPointF(second_table_rect.x() ,
                               second_table_rect.y() + line_height_),
-                      QPointF(second_table_rect.x() + width_,
+                      QPointF(second_table_rect.x() + width_ / 2,
                               second_table_rect.y() + line_height_));
 
-    for(int i = 1; i < second_table_row_size_; i++)
-    {
-        painter->drawLine(QPointF(second_table_rect.x(),
-                                  second_table_rect.y() + (2 + i) * line_height_),
-                          QPointF(second_table_rect.x() + width_ / 2,
-                                  second_table_rect.y() + (2 + i) * line_height_ ));
-    }
+//    for(int i = 1; i < second_table_row_size_; i++)
+//    {
+//        painter->drawLine(QPointF(second_table_rect.x(),
+//                                  second_table_rect.y() + (2 + i) * line_height_),
+//                          QPointF(second_table_rect.x() + width_ / 2,
+//                                  second_table_rect.y() + (2 + i) * line_height_ ));
+//    }
 
-    /*表二 一分为二的竖线*/
-    painter->drawLine(QPointF(second_table_rect.x() + width_ / 2,
-                              second_table_rect.y()),
-                      QPointF(second_table_rect.bottomLeft().x() + width_ / 2,
-                              second_table_rect.bottomLeft().y()));
+//    /*表二 一分为二的竖线*/
+//    painter->drawLine(QPointF(second_table_rect.x() + width_ / 2,
+//                              second_table_rect.y()),
+//                      QPointF(second_table_rect.bottomLeft().x() + width_ / 2,
+//                              second_table_rect.bottomLeft().y()));
 
 
 
 
     /*表二 序号栏行宽55, 工作说明栏行宽150， 距离栏及时间栏行宽85*/
-    painter->drawLine(QPointF(second_table_rect.x() + serial_number_width_,
-                              second_table_rect.y()),
-                      QPointF(second_table_rect.x() + serial_number_width_,
-                              second_table_rect.y() + second_table_height_));
-    painter->drawLine(QPointF(second_table_rect.x() + serial_number_width_ + job_content_width_,
-                              second_table_rect.y()),
-                      QPointF(second_table_rect.x() + serial_number_width_ + job_content_width_,
-                              second_table_rect.y() + second_table_height_));
-    painter->drawLine(QPointF(second_table_rect.x() + serial_number_width_ + job_content_width_ + distance_width_,
-                              second_table_rect.y()),
-                      QPointF(second_table_rect.x() + serial_number_width_ + job_content_width_ + distance_width_,
-                              second_table_rect.y() + second_table_height_));
-    painter->drawLine(QPointF(second_table_rect.x() + width_ / 2, second_table_rect.y()),
-                      QPointF(second_table_rect.x() + width_ / 2,
-                              second_table_rect.y() + second_table_height_));
+//    painter->drawLine(QPointF(second_table_rect.x() + serial_number_width_,
+//                              second_table_rect.y()),
+//                      QPointF(second_table_rect.x() + serial_number_width_,
+//                              second_table_rect.y() + second_table_height_));
+//    painter->drawLine(QPointF(second_table_rect.x() + serial_number_width_ + job_content_width_,
+//                              second_table_rect.y()),
+//                      QPointF(second_table_rect.x() + serial_number_width_ + job_content_width_,
+//                              second_table_rect.y() + second_table_height_));
+//    painter->drawLine(QPointF(second_table_rect.x() + serial_number_width_ + job_content_width_ + distance_width_,
+//                              second_table_rect.y()),
+//                      QPointF(second_table_rect.x() + serial_number_width_ + job_content_width_ + distance_width_,
+//                              second_table_rect.y() + second_table_height_));
+//    painter->drawLine(QPointF(second_table_rect.x() + width_ / 2, second_table_rect.y()),
+//                      QPointF(second_table_rect.x() + width_ / 2,
+//                              second_table_rect.y() + second_table_height_));
 
 
     /*表一 加工、检验、搬运、等待、暂存栏行宽75*/
@@ -249,13 +249,16 @@ void canvas_scene::draw_table_text(QPainter *painter)
     const auto first_table_rect = QRectF(top_left.x() + offset_topleft_width_,
                                          top_left.y() + offset_topleft_height_,
                                          width_, first_table_height_);
-    const auto second_table_topleft =  QPointF(first_table_rect.bottomLeft().x() ,
+
+
+    const auto second_table_topleft =  QPointF(first_table_rect.bottomLeft().x() + width_ / 2,
                                          first_table_rect.bottomLeft().y() + 20);
+
 
     QFont font("宋体", 12);
     painter->setFont(font);
 
-    painter->drawText(QRectF(second_table_topleft.x() + width_ / 2,
+    painter->drawText(QRectF(second_table_topleft.x(),
                              second_table_topleft.y(), width_ / 2, line_height_),
                              Qt::AlignCenter, tr("符号"));
 
@@ -304,7 +307,8 @@ void canvas_scene::draw_symbol(QPainter *painter)
     const auto first_table_rect = QRectF(top_left.x() + offset_topleft_width_,
                                          top_left.y() + offset_topleft_height_,
                                          width_, first_table_height_);
-    const auto second_table_topleft =  QPointF(first_table_rect.bottomLeft().x() ,
+
+    const auto second_table_topleft =  QPointF(first_table_rect.bottomLeft().x() + width_ / 2,
                                          first_table_rect.bottomLeft().y() + 20);
 
 
@@ -314,7 +318,7 @@ void canvas_scene::draw_symbol(QPainter *painter)
         const auto height = 20;
         const auto offset_tab_x = 25;
         const auto offset_tab_y = 5;
-        const QPointF symbol_table_topleft(second_table_topleft.x() + width_ / 2,
+        const QPointF symbol_table_topleft(second_table_topleft.x(),
                                                   second_table_topleft.y() + line_height_);
 
         painter->drawEllipse(QRectF(symbol_table_topleft.x() + offset_tab_x,
@@ -415,14 +419,14 @@ void canvas_scene::set_table()
     tablewidget_->setHorizontalHeaderLabels(header);
 
     const auto offset = 20;
-    tablewidget_->move(0, first_table_height_ + offset);
-    tablewidget_->resize(width_ / 2, second_table_height_);
+    tablewidget_->move(static_cast<int>(top_left.x()), static_cast<int>(first_table_height_ + offset + top_left.y()));
+    tablewidget_->resize(static_cast<int>(width_ / 2 - top_left.x()), second_table_height_);
 
     tablewidget_->horizontalHeader()->setFixedHeight(line_height_ * 2);
     tablewidget_->verticalHeader()->setFixedWidth(serial_number_width_);
     tablewidget_->verticalHeader()->setDefaultAlignment(Qt::AlignCenter);
     tablewidget_->verticalHeader()->setDefaultSectionSize(line_height_);
-    tablewidget_->setColumnWidth(0, job_content_width_);
+    tablewidget_->setColumnWidth(0, static_cast<int>(job_content_width_ - top_left.x()));
     tablewidget_->setColumnWidth(1, distance_width_);
     tablewidget_->setColumnWidth(2, time_width_);
     tablewidget_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -448,11 +452,14 @@ void canvas_scene::add_symbol_item()
     const auto first_table_rect = QRectF(top_left.x() + offset_topleft_width_,
                                          top_left.y() + offset_topleft_height_,
                                          width_, first_table_height_);
-    const auto second_table_topleft =  QPointF(first_table_rect.bottomLeft().x() ,
+
+    const auto second_table_topleft =  QPointF(first_table_rect.bottomLeft().x() + width_ / 2,
                                          first_table_rect.bottomLeft().y() + 20);
 
-    QPointF symbol_table_topleft(second_table_topleft.x() + width_ / 2,
+
+    QPointF symbol_table_topleft(second_table_topleft.x(),
                                        second_table_topleft.y() + 2 * line_height_);
+
 
     const auto offset_x = 25;
     const auto offset_y = 5;

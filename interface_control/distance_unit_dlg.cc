@@ -19,7 +19,7 @@ distance_unit_dlg::distance_unit_dlg(QWidget *parent, Qt::WindowFlags f)
     setLayout(layout);
 
     connect(unit_, &QComboBox::currentTextChanged, this, &distance_unit_dlg::currenttextchanged);
-    connect(unit_, &QComboBox::currentTextChanged, [](const QString & s) { qDebug() << s; });
+//    connect(unit_, &QComboBox::currentTextChanged, [](const QString & s) { qDebug() << s; });
 }
 
 QString distance_unit_dlg::currentText() const
