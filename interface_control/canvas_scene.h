@@ -9,8 +9,7 @@ using std::unique_ptr;
 using std::make_unique;
 class symbol_item;
 class QLineEdit;
-class embed_table;
-
+class QTableWidget;
 
 class canvas_scene : public QGraphicsScene
 {
@@ -23,6 +22,7 @@ public:
     void time_unit_exec();
     void distance_unit_exec();
     void hide(bool);
+    void hide_current_state() { emit load_hide_state(hide_state_); }
 public:
     template<typename ... ARGS> static unique_ptr<canvas_scene> make (ARGS && ...args);
 
@@ -57,7 +57,7 @@ private:
     std::vector<std::vector<QLineEdit*>> second_table_edit_;
     std::vector<std::vector<symbol_item*>> icons_;
 
-    embed_table* tablewidget_;
+    QTableWidget* tablewidget_;
     unique_ptr<time_unit_dlg> dlg_time_unit_;
     unique_ptr<distance_unit_dlg> dlg_distance_unit_;
     bool hide_state_ = false;

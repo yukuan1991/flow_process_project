@@ -14,6 +14,7 @@ signals:
     void distance_unit_exec();
     void hide_item(bool b);
     void load_hide_state(bool);
+    void hide_current_state();
 public:
     template<typename ... ARGS>
     static unique_ptr<canvas_view> make (ARGS && ...args)
@@ -30,10 +31,6 @@ public:
 signals:
     void saved();
     void view_closed();
-//    void time_unit_changed(const QString &s);
-//    void distance_unit_changed(const QString &s);
-//    void load_time_unit(const QString &s);
-//    void load_distance_unit(const QString &s);
 public:
     bool is_unsaved() { return unsaved_content_; }
     bool load (const std::string& data);

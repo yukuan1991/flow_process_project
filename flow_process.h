@@ -15,7 +15,6 @@ class flow_process : public QWidget
 {
     Q_OBJECT
 signals:
-    void hide_item(bool);
     void load_hide_state(bool);
 public:
     explicit flow_process(QWidget *parent = 0);
@@ -34,7 +33,8 @@ private:
 private:
     void time_unit_exec();
     void distance_unit_exec();
-//    void hide_item(bool b);
+    void hide_item(bool b);
+    void hide_current_state();
     void help_advice();
 private:
     canvas_view* create_canvas_view();

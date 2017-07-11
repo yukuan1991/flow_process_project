@@ -24,6 +24,7 @@ bool canvas_view::init()
     connect(this, &canvas_view::hide_item, ptr_scene, &canvas_scene::hide);
     connect(ptr_scene, &canvas_scene::load_hide_state, this, &canvas_view::load_hide_state);
 
+    connect(this, &canvas_view::hide_current_state, ptr_scene, &canvas_scene::hide_current_state);
     return true;
 }
 

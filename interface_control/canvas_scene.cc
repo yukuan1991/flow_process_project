@@ -16,10 +16,6 @@
 #include <QTableWidget>
 #include <QDebug>
 #include <QHeaderView>
-#include <QGroupBox>
-#include <QFormLayout>
-#include <QHBoxLayout>
-#include "embed_table.h"
 
 const QPointF canvas_scene::top_left = QPointF (0, 0);
 
@@ -31,14 +27,6 @@ using nlohmann::json;
 
 bool canvas_scene::init()
 {
-//    second_table_edit_.resize (second_table_row_size_);
-//    for (auto & it : second_table_edit_)
-//    {
-//        it.resize (second_table_front_col);
-//    }
-
-//    unit_edit_.resize(2);
-
     icons_.resize(second_table_row_size_);
     for (auto & it : icons_)
     {
@@ -149,8 +137,6 @@ bool canvas_scene::load(const string &data) try
 
     hide_state_ = content["隐藏"];
     hide(hide_state_);
-
-    emit load_hide_state(hide_state_);
 
     return true;
 }
@@ -422,13 +408,11 @@ void canvas_scene::draw_symbol(QPainter *painter)
 
 void canvas_scene::set_table()
 {
-    tablewidget_ = new embed_table(25, 3);
+    tablewidget_ = new QTableWidget(25, 3);
 
     QStringList header;
     header << "工作说明" << "距离" << "时间";
     tablewidget_->setHorizontalHeaderLabels(header);
-//    QTableWidgetItem*  job_description = new QTableWidgetItem("工作说明");
-//    tablewidget_->setHorizontalHeaderItem(0, job_description);
 
     tablewidget_->move(0, 140);
     tablewidget_->resize(375, 810);
@@ -607,8 +591,7 @@ void canvas_scene::draw_counts(QPainter *painter)
     const auto first_table_rect = QRectF(top_left.x() + offset_topleft_width_,
                                          top_left.y() + offset_topleft_height_,
                                          width_, first_table_height_);
-//    const auto second_table_topleft =  QPointF(first_table_rect.bottomLeft().x() ,
-//                                               first_table_rect.bottomLeft().y() + 20);
+
     for(int col = 0; col < first_table_behind_col_; col++)
     {
         const auto i_time = times_.at(static_cast<size_t> (col));
@@ -628,8 +611,6 @@ void canvas_scene::draw_times(QPainter *painter)
     const auto first_table_rect = QRectF(top_left.x() + offset_topleft_width_,
                                          top_left.y() + offset_topleft_height_,
                                          width_, first_table_height_);
-//    const auto second_table_topleft =  QPointF(first_table_rect.bottomLeft().x() ,
-//                                               first_table_rect.bottomLeft().y() + 20);
     std::array<qreal, 5> sums {};
     for(size_t row = 0; row < second_table_row_size_; row++)
     {

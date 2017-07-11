@@ -183,16 +183,27 @@ void flow_process::distance_unit_exec()
     view->distance_unit_exec();
 }
 
-//void flow_process::hide_item(bool b)
-//{
-//    auto view = active_canvas_view();
-//    if (view == nullptr)
-//    {
-//        return;
-//    }
+void flow_process::hide_item(bool b)
+{
+    auto view = active_canvas_view();
+    if (view == nullptr)
+    {
+        return;
+    }
 
-//    view->hide_item(b);
-//}
+    view->hide_item(b);
+}
+
+void flow_process::hide_current_state()
+{
+    auto view = active_canvas_view();
+    if (view == nullptr)
+    {
+        return;
+    }
+
+    view->hide_current_state();
+}
 
 void flow_process::help_advice()
 {
@@ -213,10 +224,14 @@ canvas_view *flow_process::create_canvas_view()
 
     ui->mdiarea->addSubWindow(canvas.release());
 
-    connect(this, &flow_process::hide_item, ptr_canvas, &canvas_view::hide_item);
+//    connect(this, &flow_process::hide_item, ptr_canvas, &canvas_view::hide_item);
 
     connect(ptr_canvas, &canvas_view::load_hide_state, this, &flow_process::load_hide_state);
 
+//    connect(this, &flow_process::hide_current_state, ptr_canvas, &canvas_view::hide_current_state);
+
+
+//    emit hide_current_state();
 //    connect(ptr_canvas, &canvas_view::view_closed, this, &flow_process::on_view_closed, Qt::QueuedConnection);
     return ptr_canvas;
 }
@@ -245,6 +260,7 @@ void flow_process::init_conn()
 
     connect(ui->flowprocess_ribbon, &flow_process_ribbon::help, this, &flow_process::help_advice);
     connect(ui->mdiarea, &QMdiArea::subWindowActivated, this, &flow_process::set_button_enabled);
+    connect(ui->mdiarea, &QMdiArea::subWindowActivated, this, &flow_process::hide_current_state);
 }
 
 void flow_process::set_button_enabled()
