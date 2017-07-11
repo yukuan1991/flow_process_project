@@ -22,7 +22,7 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
     }
 
     {
-        std::array<ui_group, 1> setting;
+        std::array<ui_group, 2> setting;
 
         button_cell b;
         b.add ("时间单位", QPixmap ("png/时间单位.png"), time_unit_);
@@ -30,6 +30,11 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
         b.set_title("设置单位");
 
         setting[0] = ::move (b);
+
+        b.add ("隐藏", QPixmap ("png/时间单位.png"), hide_);
+        b.set_title("设置窗口");
+
+        setting[1] = ::move (b);
 
         add_tab(setting, "设置");
     }
@@ -46,6 +51,8 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
         add_tab(help, "帮助");
     }
 
+    hide_->setCheckable(true);
+
     connect(cut_, &ribbon_tool::clicked, this, &flow_process_ribbon::cut);
     connect(copy_, &ribbon_tool::clicked, this, &flow_process_ribbon::copy);
     connect(paste_, &ribbon_tool::clicked, this, &flow_process_ribbon::paste);
@@ -53,6 +60,9 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
 
     connect(time_unit_, &ribbon_tool::clicked, this, &flow_process_ribbon::time_unit_exec);
     connect(distance_unit_, &ribbon_tool::clicked, this, &flow_process_ribbon::distance_unit_exec);
+    connect(hide_, &ribbon_tool::clicked, this, &flow_process_ribbon::hide_clicked);
+
+    connect(this, &flow_process_ribbon::set_hide_checked, hide_, &ribbon_tool::setChecked);
 
     connect (this, &flow_process_ribbon::set_enabled, cut_, &ribbon_tool::setEnabled);
     connect (this, &flow_process_ribbon::set_enabled, copy_, &ribbon_tool::setEnabled);
@@ -60,7 +70,21 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
     connect (this, &flow_process_ribbon::set_enabled, del_, &ribbon_tool::setEnabled);
     connect (this, &flow_process_ribbon::set_enabled, time_unit_, &ribbon_tool::setEnabled);
     connect (this, &flow_process_ribbon::set_enabled, distance_unit_, &ribbon_tool::setEnabled);
+    connect (this, &flow_process_ribbon::set_enabled, hide_, &ribbon_tool::setEnabled);
+
 
     connect(help_, &ribbon_tool::clicked, this, &flow_process_ribbon::help);
 
+}
+
+void flow_process_ribbon::hide_clicked()
+{
+    if(hide_->isChecked())
+    {
+        emit hide_item(true);
+    }
+    else
+    {
+        emit hide_item(false);
+    }
 }

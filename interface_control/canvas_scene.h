@@ -18,9 +18,11 @@ class canvas_scene : public QGraphicsScene
 signals:
     void item_selection_changed (int row, int col, bool selected);
     void scene_changed();
+    void load_hide_state(bool);
 public:
     void time_unit_exec();
     void distance_unit_exec();
+    void hide(bool);
 public:
     template<typename ... ARGS> static unique_ptr<canvas_scene> make (ARGS && ...args);
 
@@ -51,16 +53,14 @@ protected:
 
 private:
     void unselect_other (int row, int col, bool selected);
-
 private:
     std::vector<std::vector<QLineEdit*>> second_table_edit_;
     std::vector<std::vector<symbol_item*>> icons_;
 
     embed_table* tablewidget_;
-//    QString time_unit_text_ = "";
-//    QString distance_unit_text_ = "";
     unique_ptr<time_unit_dlg> dlg_time_unit_;
     unique_ptr<distance_unit_dlg> dlg_distance_unit_;
+    bool hide_state_ = false;
 private:
     QRectF print_rect_;
 private:

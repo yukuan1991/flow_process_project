@@ -15,8 +15,8 @@ class flow_process : public QWidget
 {
     Q_OBJECT
 signals:
-    void time_unit_exec();
-    void distance_unit_exec();
+    void hide_item(bool);
+    void load_hide_state(bool);
 public:
     explicit flow_process(QWidget *parent = 0);
     ~flow_process();
@@ -32,6 +32,9 @@ private:
     void save_subwindow(QMdiSubWindow* sub_window);
     void file_print();
 private:
+    void time_unit_exec();
+    void distance_unit_exec();
+//    void hide_item(bool b);
     void help_advice();
 private:
     canvas_view* create_canvas_view();

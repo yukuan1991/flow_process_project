@@ -12,6 +12,8 @@ class canvas_view : public QGraphicsView
 signals:
     void time_unit_exec();
     void distance_unit_exec();
+    void hide_item(bool b);
+    void load_hide_state(bool);
 public:
     template<typename ... ARGS>
     static unique_ptr<canvas_view> make (ARGS && ...args)
@@ -50,5 +52,4 @@ private:
     unique_ptr<canvas_scene> scene_ = canvas_scene::make (QRectF{0, 0, 1100, 1500});
 
     bool unsaved_content_ = false;
-
 };
