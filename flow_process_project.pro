@@ -43,7 +43,8 @@ SOURCES += main.cc\
     interface_control/canvas_view.cc \
     interface_control/about_us_dlg.cc \
     interface_control/time_unit_dlg.cc \
-    interface_control/distance_unit_dlg.cc
+    interface_control/distance_unit_dlg.cc \
+    interface_control/unit_dlg.cc
 
 HEADERS  += flow_process.h \
     interface_control/ribbon.h \
@@ -59,7 +60,8 @@ HEADERS  += flow_process.h \
     json.hpp \
     interface_control/about_us_dlg.h \
     interface_control/time_unit_dlg.h \
-    interface_control/distance_unit_dlg.h
+    interface_control/distance_unit_dlg.h \
+    interface_control/unit_dlg.h
 
 FORMS    += flow_process.ui
 
