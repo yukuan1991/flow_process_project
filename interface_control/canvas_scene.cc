@@ -37,7 +37,7 @@ bool canvas_scene::init()
 
     setBackgroundBrush(QColor (230, 230, 230));
 
-    setSceneRect(0, 0, 1500, 1000);
+//    setSceneRect(0, 0, 1500, 1000);
 
     const auto offset = 20;
     print_rect_ = QRectF(0, 0, width_ + 2 * top_left.x(), line_height_ * 31 + offset + 2 * top_left.y());

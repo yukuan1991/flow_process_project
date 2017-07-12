@@ -46,7 +46,7 @@ protected:
 //protected:
 //    void closeEvent(QCloseEvent* event) override;
 private:
-    unique_ptr<canvas_scene> scene_ = canvas_scene::make (QRectF{0, 0, 1100, 1500});
+    unique_ptr<canvas_scene> scene_ = canvas_scene::make (QRectF{0, 0, 1500, 1000});
 
     bool unsaved_content_ = false;
 };

@@ -21,7 +21,7 @@ flow_process::flow_process(QWidget *parent) :
     ui->mdiarea->setViewMode(QMdiArea::TabbedView);
     init_conn();
     set_button_enabled();
-    setMinimumSize(1000, 800);
+    setMinimumSize(800, 800);
     setWindowIcon(QIcon("png/flow_process.png"));
 }
 

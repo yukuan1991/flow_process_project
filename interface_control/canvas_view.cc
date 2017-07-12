@@ -12,6 +12,10 @@ bool canvas_view::init()
     auto ptr_scene = scene_.get();
     this->setScene(ptr_scene);
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    setRenderHints (QPainter::SmoothPixmapTransform);
+
+//    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     connect (ptr_scene, &canvas_scene::scene_changed, [this]{ unsaved_content_ = true; });
     //connect (scene_.get(), &canvas_scene::scene_changed, [this]{ qDebug() << "unsaved_content_"; });
