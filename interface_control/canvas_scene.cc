@@ -49,6 +49,10 @@ bool canvas_scene::init()
     dlg_distance_unit_ = make_unique<distance_unit_dlg> ();
 
     //connect (this, &canvas_scene::scene_changed, [this] () { qDebug() << "scene changed"; });
+    connect(dlg_time_unit_.get(), &time_unit_dlg::confirm, this, &canvas_scene::time_unit_confirm);
+    connect(dlg_time_unit_.get(), &time_unit_dlg::cancel, this, &canvas_scene::time_unit_cancel);
+    connect(dlg_distance_unit_.get(), &distance_unit_dlg::confirm, this, &canvas_scene::distance_unit_confirm);
+    connect(dlg_distance_unit_.get(), &distance_unit_dlg::cancel, this, &canvas_scene::distance_unit_cancel);
 
     return true;
 }
@@ -63,6 +67,30 @@ void canvas_scene::distance_unit_exec()
     dlg_distance_unit_->exec();
 }
 
+void canvas_scene::time_unit_confirm()
+{
+    str_time_unit_ = dlg_time_unit_->currentText();
+    dlg_time_unit_->hide();
+}
+
+void canvas_scene::time_unit_cancel()
+{
+    dlg_time_unit_->hide();
+    dlg_time_unit_->set_unit(str_time_unit_);
+}
+
+void canvas_scene::distance_unit_confirm()
+{
+    str_distance_unit_ = dlg_distance_unit_->currentText();
+    dlg_distance_unit_->hide();
+}
+
+void canvas_scene::distance_unit_cancel()
+{
+    dlg_distance_unit_->hide();
+    dlg_distance_unit_->set_unit(str_distance_unit_);
+}
+
 string canvas_scene::dump()
 {
     using boost::range::find_if;
@@ -70,8 +98,8 @@ string canvas_scene::dump()
 //    using std::begin;
 
     json data;
-    data ["单位"]["时间"] = dlg_time_unit_->currentText().toStdString ();
-    data ["单位"]["距离"] = dlg_distance_unit_->currentText().toStdString ();
+    data ["单位"]["时间"] = str_time_unit_.toStdString ();
+    data ["单位"]["距离"] = str_distance_unit_.toStdString ();
 
     data ["隐藏"] = hide_state_;
 
@@ -111,7 +139,9 @@ bool canvas_scene::load(const string &data) try
     std::string distance_unit = content["单位"]["距离"];
 
     dlg_distance_unit_->set_unit(distance_unit.data());
+    str_distance_unit_ = distance_unit.data();
     dlg_time_unit_->set_unit(time_unit.data());
+    str_time_unit_ = time_unit.data();
 
     auto & table = content["数据"];
 
@@ -338,12 +368,17 @@ void canvas_scene::draw_symbol(QPainter *painter)
                           carry_line_right);
 
         painter->save();
-        QFont font("Dotum", 17);
-        painter->setFont(font);
-        QRectF wait_rect(symbol_table_topleft.x() + 3 * (width_ / 10) + offset_tab_x,
+        QRectF wait_rect(symbol_table_topleft.x() + 3 * (width_ / 10) + offset_tab_x - 5,
                          symbol_table_topleft.y() + offset_tab_y,
                          width, height);
-        painter->drawText(wait_rect, Qt::AlignCenter, tr("D"));
+        painter->setBrush(Qt::white);
+        painter->drawChord(wait_rect, 90 * 16, -180 * 16);
+//        QFont font("Dotum", 17);
+//        painter->setFont(font);
+//        QRectF wait_rect(symbol_table_topleft.x() + 3 * (width_ / 10) + offset_tab_x,
+//                         symbol_table_topleft.y() + offset_tab_y,
+//                         width, height);
+//        painter->drawText(wait_rect, Qt::AlignCenter, tr("D"));
         painter->restore();
 
         const QPointF  temporary_storage_points[3] =
@@ -387,12 +422,17 @@ void canvas_scene::draw_symbol(QPainter *painter)
                           carry_line_right);
 
         painter->save();
-        QFont font("Dotum", 17);
-        painter->setFont(font);
-        QRectF wait_rect(symbol_table_topleft.x() + 3.5 * (width_ / 10),
-                               symbol_table_topleft.y(),
-                               (width_ / 10 / 2), line_height_);
-        painter->drawText(wait_rect, Qt::AlignCenter, tr("D"));
+//        QFont font("Dotum", 17);
+//        painter->setFont(font);
+//        QRectF wait_rect(symbol_table_topleft.x() + 3.5 * (width_ / 10),
+//                               symbol_table_topleft.y(),
+//                               (width_ / 10 / 2), line_height_);
+//        painter->drawText(wait_rect, Qt::AlignCenter, tr("D"));
+
+        QRectF wait_rect(symbol_table_topleft.x() + (width_ / 10) * 3 + offset_tab_x - 5,
+                               symbol_table_topleft.y() + offset_tab_y, width, height);
+        painter->setBrush(Qt::white);
+        painter->drawChord(wait_rect, 90 * 16, -180 * 16);
         painter->restore();
 
         const QPointF  temporary_storage_points[3] =

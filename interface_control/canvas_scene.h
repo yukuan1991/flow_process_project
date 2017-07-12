@@ -50,7 +50,11 @@ protected:
     void draw_counts (QPainter* painter);
     void draw_times (QPainter* painter);
     void draw_distance (QPainter* painter);
-
+private:
+    void time_unit_confirm();
+    void time_unit_cancel();
+    void distance_unit_confirm();
+    void distance_unit_cancel();
 private:
     void unselect_other (int row, int col, bool selected);
 private:
@@ -60,6 +64,8 @@ private:
     QTableWidget* tablewidget_;
     unique_ptr<time_unit_dlg> dlg_time_unit_;
     unique_ptr<distance_unit_dlg> dlg_distance_unit_;
+    QString str_time_unit_;
+    QString str_distance_unit_;
     bool hide_state_ = false;
 private:
     QRectF print_rect_;

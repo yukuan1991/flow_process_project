@@ -8,6 +8,8 @@ class distance_unit_dlg : public QDialog
     Q_OBJECT
 signals:
     void currenttextchanged(const QString &s);
+    void confirm();
+    void cancel();
 public:
     distance_unit_dlg(QWidget *parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
     void set_unit(const QString& s) { unit_->setCurrentText(s); }

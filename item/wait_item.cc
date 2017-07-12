@@ -33,9 +33,13 @@ void wait_item::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     Q_UNUSED(option);
     Q_UNUSED(widget);
 //    QFont font("宋体", 17);
-    QFont font("Dotum", 17);
-    painter->setFont(font);
+//    QFont font("Dotum", 17);
+//    painter->setFont(font);
+    painter->setBrush(Qt::white);
     painter->setPen(is_selected() ? selected_color() : unselected_color());
+    const auto rect = QRectF(boundingRect().topLeft() - QPointF(5, 0), boundingRect().bottomRight() - QPointF(5, 0));
+    painter->drawChord(rect, 90 * 16, -180 * 16);
+//    painter->drawRect(boundingRect());
 
-    painter->drawText(boundingRect(), Qt::AlignCenter, "D");
+//    painter->drawText(boundingRect(), Qt::AlignCenter, "D");
 }
