@@ -22,7 +22,7 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
     }
 
     {
-        std::array<ui_group, 2> setting;
+        std::array<ui_group, 1> setting;
 
         button_cell b;
         b.add ("时间单位", QPixmap ("png/时间单位.png"), time_unit_);
@@ -31,12 +31,19 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
 
         setting[0] = ::move (b);
 
-        b.add ("隐藏", QPixmap ("png/隐藏.png"), hide_);
-        b.set_title("设置图标");
-
-        setting[1] = ::move (b);
-
         add_tab(setting, "设置");
+    }
+
+    {
+        std::array<ui_group, 1> view;
+
+        button_cell b;
+        b.add ("隐藏", QPixmap ("png/隐藏.png"), hide_);
+        b.set_title("符号隐藏");
+
+        view[0] = ::move (b);
+
+        add_tab(view, "视图");
     }
 
     {

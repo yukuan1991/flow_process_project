@@ -16,5 +16,7 @@ public:
 private:
     QComboBox* unit_;
     QLabel* time_;
+    QPushButton* confirm_;
+    QPushButton* cancel_;
 };
 

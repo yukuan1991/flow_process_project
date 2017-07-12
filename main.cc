@@ -8,6 +8,7 @@
 #include "interface_control/time_unit_dlg.h"
 #include "interface_control/distance_unit_dlg.h"
 
+
 void set_style ()
 {
     using namespace boost::filesystem;
@@ -36,7 +37,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     set_style();
-//    flow_process_ribbon w;
+//    time_unit_dlg t;
+//    t.exec();
     flow_process w;
     w.show();
 
