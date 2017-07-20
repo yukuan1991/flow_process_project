@@ -7,6 +7,7 @@ class canvas_view;
 class QMdiSubWindow;
 class time_unit_dlg;
 class distance_unit_dlg;
+
 namespace Ui {
 class flow_process;
 }
@@ -28,6 +29,7 @@ private:
     void file_open();
     void file_save();
     void file_save_as();
+    void file_import();
     void save_subwindow(QMdiSubWindow* sub_window);
     void file_print();
 private:

@@ -9,6 +9,7 @@ using std::make_unique;
 class canvas_view : public QGraphicsView
 {
     Q_OBJECT
+
 signals:
     void time_unit_exec();
     void distance_unit_exec();

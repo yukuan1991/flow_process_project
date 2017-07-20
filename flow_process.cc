@@ -48,6 +48,10 @@ void flow_process::file_operations(const QString &s)
     {
         file_save_as();
     }
+    else if(s == "导入")
+    {
+        file_import();
+    }
     else if(s == "打印")
     {
         file_print();
@@ -74,6 +78,8 @@ void flow_process::file_open()
     }
 
     auto file_content = file::read_all(::utf_to_sys(file_name.toStdString()).data());
+    qDebug() << (*file_content).data();
+
     if (!file_content)
     {
         QMessageBox::information(this, "打开", "打开文件失败，请检查文件是否存在");
@@ -115,6 +121,36 @@ void flow_process::file_save_as()
     file::write_buffer(::utf_to_sys(path.toStdString()).data(), save_as_view->dump());
     save_as_view->set_attached_file(std::move(path));
     emit save_as_view->saved();
+}
+
+void flow_process::file_import()
+{
+    auto file_name = QFileDialog::getOpenFileName(this, "打开文件", ".", "Video Analysis(*.vaf)");
+    if (file_name.isEmpty())
+    {
+        return;
+    }
+
+    auto file_content = file::read_all(::utf_to_sys(file_name.toStdString()).data());
+    qDebug() << (*file_content).data();
+    if (!file_content)
+    {
+        QMessageBox::information(this, "打开", "打开文件失败，请检查文件是否存在");
+        return;
+    }
+//    auto taskinfo = readVaf(*file_content);
+
+
+
+//    auto canvas = create_canvas_view();
+//    if (!canvas->load (*file_content))
+//    {
+//        QMessageBox::information(this, "打开", "打开文件失败，文件已经损坏");
+//        return;
+//    }
+
+//    canvas->set_attached_file(std::move (file_name));
+//    canvas->ensureVisible(0, 0, 300,200 ); //打开文件时确保显示画布的区域在左上角
 }
 
 void flow_process::save_subwindow(QMdiSubWindow *sub_window)

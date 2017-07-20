@@ -7,9 +7,11 @@
 
 using std::unique_ptr;
 using std::make_unique;
+
 class symbol_item;
 class QLineEdit;
 class QTableWidget;
+
 
 class canvas_scene : public QGraphicsScene
 {

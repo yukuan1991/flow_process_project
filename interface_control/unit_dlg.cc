@@ -14,9 +14,6 @@ unit_dlg::unit_dlg(QWidget *parent, Qt::WindowFlags f)
     unit_ = new QComboBox(this);
     confirm_ = new QPushButton("确定", this);
     cancel_ = new QPushButton("取消", this);
-//    QStringList text;
-//    text << "" << "秒" << "分钟" << "小时";
-//    unit_->addItems(text);
 
     hlayout1->addWidget(label_);
     hlayout1->addWidget(unit_);
@@ -29,6 +26,7 @@ unit_dlg::unit_dlg(QWidget *parent, Qt::WindowFlags f)
 
     setLayout(layout);
     setFixedSize(220, 80);
+
 //    connect(unit_, &QComboBox::currentTextChanged, this, &unit_dlg::currenttextchanged);
     connect(confirm_, &QPushButton::clicked, this, &unit_dlg::confirm);
     connect(cancel_, &QPushButton::clicked, this, &unit_dlg::cancel);

@@ -59,6 +59,8 @@ bool canvas_view::load(const string &data)
 
 
 
+
+
 std::string canvas_view::dump()
 {
     return scene_->dump ();

@@ -13,6 +13,7 @@ signals:
     void distance_unit_exec();
     void hide_item(bool);
     void help();
+    void import();
 
     void set_hide_checked(bool);
 public:
@@ -22,6 +23,7 @@ private:
     ribbon_tool *cut_, *copy_, *paste_, *del_;
     ribbon_tool *hide_;
     ribbon_tool *help_;
+    ribbon_tool *import_;
     ribbon_tool *time_unit_, *distance_unit_;
 };
 
