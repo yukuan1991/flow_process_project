@@ -4,6 +4,7 @@
 #include <vector>
 #include "time_unit_dlg.h"
 #include "distance_unit_dlg.h"
+#include "openvaf.h"
 
 using std::unique_ptr;
 using std::make_unique;
@@ -33,10 +34,10 @@ public:
 
     std::string dump ();
     bool load (const std::string& data);
+    bool import(const std::vector<taskInfo>& data);
 
 protected:
     void drawBackground(QPainter* painter, const QRectF &rect) override;
-
 protected:
     template<typename ... ARGS>
     canvas_scene(ARGS && ... args) : QGraphicsScene(std::forward<ARGS> (args)...) {}

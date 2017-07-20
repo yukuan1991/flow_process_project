@@ -57,6 +57,11 @@ bool canvas_view::load(const string &data)
     return scene_->load(data);
 }
 
+bool canvas_view::import(const std::vector<taskInfo> &data)
+{
+    return scene_->import(data);
+}
+
 
 
 

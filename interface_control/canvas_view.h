@@ -3,6 +3,7 @@
 #include <memory>
 #include "canvas_scene.h"
 #include <QPrinter>
+#include "openvaf.h"
 
 using std::unique_ptr;
 using std::make_unique;
@@ -35,6 +36,7 @@ signals:
 public:
     bool is_unsaved() { return unsaved_content_; }
     bool load (const std::string& data);
+    bool import (const std::vector<taskInfo>& data);
     std::string dump();
     QString attached_file() { return windowTitle(); }
     void set_attached_file(QString attached_file) { setWindowTitle(attached_file); }

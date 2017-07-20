@@ -16,6 +16,7 @@
 #include <QTableWidget>
 #include <QDebug>
 #include <QHeaderView>
+#include <QString>
 
 const QPointF canvas_scene::top_left = QPointF (5, 5);
 
@@ -191,6 +192,57 @@ void canvas_scene::drawBackground(QPainter *painter, const QRectF &rect)
     draw_distance(painter);
 
 }
+
+bool canvas_scene::import(const std::vector<taskInfo>& data)
+{
+    int row = 0;
+    for (auto & it : data)
+    {
+        const auto work = it.name;
+        const string work_title = it.name.toStdString();
+        qDebug() << "work_title:" << work;
+        const auto time_qstr = QString::number(it.stdTime);
+        const string time = time_qstr.toStdString();
+        qDebug() << "time:" << time_qstr;
+
+        tablewidget_->item(row, 0)->setText(work_title.data());
+        tablewidget_->item(row, 2)->setText(time.data());
+
+        int pos;
+        if(it.type == workType::Processing)
+        {
+            pos = 0;
+        }
+        else if(it.type == workType::Checking)
+        {
+            pos = 1;
+        }
+        else if(it.type == workType::Moving)
+        {
+            pos = 2;
+        }
+        else if(it.type == workType::Waiting)
+        {
+            pos = 3;
+        }
+        else
+        {
+            pos = -1;
+        }
+
+        qDebug() << "pos:" << pos;
+
+        if (pos >= 0)
+        {
+            icons_.at(static_cast<size_t>(row)).at(static_cast<size_t> (pos))->set_selected(true);
+        }
+        row ++;
+    }
+
+    return true;
+}
+
+
 
 /*每行高30个像素, 共31行*/
 void canvas_scene::draw_table(QPainter *painter)

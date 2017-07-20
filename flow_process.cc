@@ -10,6 +10,8 @@
 #include <base/utils/charset.hpp>
 #include "interface_control/time_unit_dlg.h"
 #include "interface_control/distance_unit_dlg.h"
+#include <string_view>
+#include "openvaf.h"
 
 #include <QDebug>
 
@@ -125,32 +127,32 @@ void flow_process::file_save_as()
 
 void flow_process::file_import()
 {
-    auto file_name = QFileDialog::getOpenFileName(this, "打开文件", ".", "Video Analysis(*.vaf)");
+    auto file_name = QFileDialog::getOpenFileName(this, "导入文件", ".", "Video Analysis(*.vaf)");
     if (file_name.isEmpty())
     {
         return;
     }
 
     auto file_content = file::read_all(::utf_to_sys(file_name.toStdString()).data());
-    qDebug() << (*file_content).data();
+//    qDebug() << (*file_content).data();
     if (!file_content)
     {
-        QMessageBox::information(this, "打开", "打开文件失败，请检查文件是否存在");
+        QMessageBox::information(this, "导入", "导入文件失败，请检查文件是否存在");
         return;
     }
-//    auto taskinfo = readVaf(*file_content);
+    auto taskinfo = readVaf(*file_content);
 
 
 
-//    auto canvas = create_canvas_view();
-//    if (!canvas->load (*file_content))
-//    {
-//        QMessageBox::information(this, "打开", "打开文件失败，文件已经损坏");
-//        return;
-//    }
+    auto canvas = create_canvas_view();
+    if (!canvas->import (taskinfo))
+    {
+        QMessageBox::information(this, "导入", "导入文件失败，文件已经损坏");
+        return;
+    }
 
 //    canvas->set_attached_file(std::move (file_name));
-//    canvas->ensureVisible(0, 0, 300,200 ); //打开文件时确保显示画布的区域在左上角
+    canvas->ensureVisible(0, 0, 300,200 ); //打开文件时确保显示画布的区域在左上角
 }
 
 void flow_process::save_subwindow(QMdiSubWindow *sub_window)
