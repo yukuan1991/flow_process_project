@@ -61,8 +61,7 @@ HEADERS  += flow_process.h \
     interface_control/about_us_dlg.h \
     interface_control/time_unit_dlg.h \
     interface_control/distance_unit_dlg.h \
-    interface_control/unit_dlg.h \
-    import.hpp
+    interface_control/unit_dlg.h
 
 FORMS    += flow_process.ui
 
