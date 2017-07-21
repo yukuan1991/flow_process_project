@@ -50,10 +50,6 @@ void flow_process::file_operations(const QString &s)
     {
         file_save_as();
     }
-    else if(s == "导入")
-    {
-        file_import();
-    }
     else if(s == "打印")
     {
         file_print();
@@ -127,6 +123,8 @@ void flow_process::file_save_as()
 
 void flow_process::file_import()
 {
+    auto canvas = active_canvas_view();
+
     auto file_name = QFileDialog::getOpenFileName(this, "导入文件", ".", "Video Analysis(*.vaf)");
     if (file_name.isEmpty())
     {
@@ -142,9 +140,6 @@ void flow_process::file_import()
     }
     auto taskinfo = readVaf(*file_content);
 
-
-
-    auto canvas = create_canvas_view();
     if (!canvas->import (taskinfo))
     {
         QMessageBox::information(this, "导入", "导入文件失败，文件已经损坏");
@@ -290,6 +285,9 @@ canvas_view *flow_process::active_canvas_view()
 void flow_process::init_conn()
 {
     connect(ui->flowprocess_ribbon, &flow_process_ribbon::file_menu_triggered, [this] (const QString & s) { file_operations(s); });
+
+    connect(ui->flowprocess_ribbon, &flow_process_ribbon::import, this, &flow_process::file_import);
+
     connect(ui->flowprocess_ribbon, &flow_process_ribbon::time_unit_exec, this, &flow_process::time_unit_exec);
     connect(ui->flowprocess_ribbon, &flow_process_ribbon::distance_unit_exec, this, &flow_process::distance_unit_exec);
 

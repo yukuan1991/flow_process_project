@@ -198,12 +198,10 @@ bool canvas_scene::import(const std::vector<taskInfo>& data)
     int row = 0;
     for (auto & it : data)
     {
-        const auto work = it.name;
-        const string work_title = it.name.toStdString();
-        qDebug() << "work_title:" << work;
+        const auto work_title_qstr = it.name;
+        const string work_title = work_title_qstr.toStdString();
         const auto time_qstr = QString::number(it.stdTime);
         const string time = time_qstr.toStdString();
-        qDebug() << "time:" << time_qstr;
 
         tablewidget_->item(row, 0)->setText(work_title.data());
         tablewidget_->item(row, 2)->setText(time.data());
@@ -229,8 +227,6 @@ bool canvas_scene::import(const std::vector<taskInfo>& data)
         {
             pos = -1;
         }
-
-        qDebug() << "pos:" << pos;
 
         if (pos >= 0)
         {

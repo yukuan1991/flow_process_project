@@ -103,10 +103,6 @@ void ribbon::setup_menu()
     connect (this, &ribbon::set_enabled, action.get(), &QAction::setEnabled);
     menu->addAction (action.release ());
 
-    action =  make_action (QPixmap ("png/导入.png"), "导入");
-    connect (action.get (), &QAction::triggered, [this] { file_menu_triggered ("导入"); });
-    menu->addAction (action.release ());
-
     action =  make_action (QPixmap ("png/打印.png"), "打印");
     connect (action.get (), &QAction::triggered, [this] { file_menu_triggered ("打印"); });
     connect (this, &ribbon::set_enabled, action.get(), &QAction::setEnabled);

@@ -7,7 +7,7 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
     :ribbon (parent)
 {
     {
-        std::array<ui_group, 1> edit;
+        std::array<ui_group, 2> edit;
 
         button_cell b;
         b.add ("剪切", QPixmap ("png/剪切.png"), cut_);
@@ -18,6 +18,11 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
 
         edit[0] = ::move (b);
 
+        b.add ("导入", QPixmap ("png/导入.png"), import_);
+        b.set_title("第二类");
+
+        edit[1] = ::move (b);
+
         add_tab(edit, "编辑");
     }
 
@@ -27,7 +32,7 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
         button_cell b;
         b.add ("时间单位", QPixmap ("png/时间单位.png"), time_unit_);
         b.add ("距离单位", QPixmap ("png/距离单位.png"), distance_unit_);
-        b.set_title("设置单位");
+        b.set_title("第一类");
 
         setting[0] = ::move (b);
 
@@ -39,7 +44,7 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
 
         button_cell b;
         b.add ("隐藏", QPixmap ("png/隐藏.png"), hide_);
-        b.set_title("符号隐藏");
+        b.set_title("第一类");
 
         view[0] = ::move (b);
 
@@ -64,6 +69,7 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
     connect(copy_, &ribbon_tool::clicked, this, &flow_process_ribbon::copy);
     connect(paste_, &ribbon_tool::clicked, this, &flow_process_ribbon::paste);
     connect(del_, &ribbon_tool::clicked, this, &flow_process_ribbon::del);
+    connect(import_, &ribbon_tool::clicked, this, &flow_process_ribbon::import);
 
     connect(time_unit_, &ribbon_tool::clicked, this, &flow_process_ribbon::time_unit_exec);
     connect(distance_unit_, &ribbon_tool::clicked, this, &flow_process_ribbon::distance_unit_exec);
@@ -76,6 +82,7 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
     connect (this, &flow_process_ribbon::set_enabled, copy_, &ribbon_tool::setEnabled);
     connect (this, &flow_process_ribbon::set_enabled, paste_, &ribbon_tool::setEnabled);
     connect (this, &flow_process_ribbon::set_enabled, del_, &ribbon_tool::setEnabled);
+    connect (this, &flow_process_ribbon::set_enabled, import_, &ribbon_tool::setEnabled);
     connect (this, &flow_process_ribbon::set_enabled, time_unit_, &ribbon_tool::setEnabled);
     connect (this, &flow_process_ribbon::set_enabled, distance_unit_, &ribbon_tool::setEnabled);
     connect (this, &flow_process_ribbon::set_enabled, hide_, &ribbon_tool::setEnabled);
