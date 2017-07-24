@@ -759,8 +759,7 @@ void canvas_scene::draw_times(QPainter *painter)
         {
             text = "错误";
         }
-//        else if(!(sums.at(col) > 0))
-        else if(static_cast<int>(sums.at(col)) == 0)
+        else if(!(sums.at(col) > 0))
         {
             qDebug() << "continue";
             continue;
