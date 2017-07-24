@@ -759,13 +759,17 @@ void canvas_scene::draw_times(QPainter *painter)
         {
             text = "错误";
         }
+//        else if(!(sums.at(col) > 0))
         else if(static_cast<int>(sums.at(col)) == 0)
         {
+            qDebug() << "continue";
             continue;
         }
         else
         {
             text = QString::number(sums.at(col));
+            qDebug() <<  text;
+            qDebug() << col;
         }
 
         painter->drawText(QRectF(first_table_rect.x() + width_ / 2 + (width_ / 10) * col,
@@ -826,7 +830,7 @@ void canvas_scene::draw_distance(QPainter *painter)
         {
             text = "错误";
         }
-        else if(static_cast<int>(sums.at(col)) == 0)
+        else if(!(sums.at(col) > 0))
         {
             continue;
         }
