@@ -3,7 +3,33 @@
 #include <QApplication>
 #include <QClipboard>
 #include <boost/scope_exit.hpp>
+#include <QMouseEvent>
+#include <QMenu>
+#include <QKeyEvent>
+
 #include <QDebug>
+
+void table_widget::mouseReleaseEvent(QMouseEvent *event)
+{
+    QTableWidget::mouseReleaseEvent(event);
+
+//    auto item = this->itemAt(event->pos());
+    if(event->button() == Qt::RightButton)
+    {
+        auto menu = std::make_unique<QMenu> ();
+
+        auto action_cut = menu->addAction("剪切");
+        auto action_copy = menu->addAction ("复制");
+        auto action_paste = menu->addAction ("粘贴");
+        auto action_del = menu->addAction ("删除");
+
+        connect (action_copy, &QAction::triggered, [this] {on_copy_del (OPERATION_COPY);});
+        connect (action_cut, &QAction::triggered, [this] {on_copy_del (OPERATION_DEL | OPERATION_COPY);});
+        connect (action_del, &QAction::triggered, [this] { on_copy_del (OPERATION_DEL);});
+        connect (action_paste, &QAction::triggered, this, &table_widget::on_paste);
+        menu->exec(QCursor::pos());
+    }
+}
 
 void table_widget::on_copy_del(unsigned flag)
 {
@@ -89,6 +115,30 @@ void table_widget::on_paste()
             item->setData(Qt::EditRole, data[i][j].data());
         }
     }
+}
+
+void table_widget::keyPressEvent(QKeyEvent *event)
+{
+    if (event->modifiers() & Qt::ControlModifier)
+    {
+        if(event->key() == Qt::Key_C)
+        {
+            on_copy_del(OPERATION_COPY);
+            return;
+        }
+        else if(event->key() == Qt::Key_X)
+        {
+            on_copy_del(OPERATION_COPY | OPERATION_DEL);
+            return;
+        }
+        else if(event->key() == Qt::Key_V)
+        {
+            on_paste();
+            return;
+        }
+    }
+
+    QTableView::keyPressEvent(event);
 }
 
 std::vector<std::vector<std::string> > table_widget::get_clip_structure()
