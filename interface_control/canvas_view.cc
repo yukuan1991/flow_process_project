@@ -52,6 +52,26 @@ canvas_view::~canvas_view()
 
 }
 
+void canvas_view::copy()
+{
+    scene_->copy();
+}
+
+void canvas_view::cut()
+{
+    scene_->cut();
+}
+
+void canvas_view::paste()
+{
+    scene_->paste();
+}
+
+void canvas_view::del()
+{
+    scene_->del();
+}
+
 bool canvas_view::load(const string &data)
 {
     return scene_->load(data);

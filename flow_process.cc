@@ -194,6 +194,50 @@ void flow_process::file_print()
     }
 }
 
+void flow_process::copy()
+{
+    auto view = active_canvas_view();
+    if (view == nullptr)
+    {
+        return;
+    }
+
+    view->copy();
+}
+
+void flow_process::cut()
+{
+    auto view = active_canvas_view();
+    if (view == nullptr)
+    {
+        return;
+    }
+
+    view->cut();
+}
+
+void flow_process::paste()
+{
+    auto view = active_canvas_view();
+    if (view == nullptr)
+    {
+        return;
+    }
+
+    view->paste();
+}
+
+void flow_process::del()
+{
+    auto view = active_canvas_view();
+    if (view == nullptr)
+    {
+        return;
+    }
+
+    view->del();
+}
+
 void flow_process::time_unit_exec()
 {
     auto view = active_canvas_view();
@@ -287,6 +331,11 @@ void flow_process::init_conn()
     connect(ui->flowprocess_ribbon, &flow_process_ribbon::file_menu_triggered, [this] (const QString & s) { file_operations(s); });
 
     connect(ui->flowprocess_ribbon, &flow_process_ribbon::import, this, &flow_process::file_import);
+
+    connect(ui->flowprocess_ribbon, &flow_process_ribbon::copy, this, &flow_process::copy);
+    connect(ui->flowprocess_ribbon, &flow_process_ribbon::cut, this, &flow_process::cut);
+    connect(ui->flowprocess_ribbon, &flow_process_ribbon::paste, this, &flow_process::paste);
+    connect(ui->flowprocess_ribbon, &flow_process_ribbon::del, this, &flow_process::del);
 
     connect(ui->flowprocess_ribbon, &flow_process_ribbon::time_unit_exec, this, &flow_process::time_unit_exec);
     connect(ui->flowprocess_ribbon, &flow_process_ribbon::distance_unit_exec, this, &flow_process::distance_unit_exec);

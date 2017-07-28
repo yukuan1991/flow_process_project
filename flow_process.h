@@ -33,6 +33,10 @@ private:
     void save_subwindow(QMdiSubWindow* sub_window);
     void file_print();
 private:
+    void copy();
+    void cut();
+    void paste();
+    void del();
     void time_unit_exec();
     void distance_unit_exec();
     void hide_item(bool b);

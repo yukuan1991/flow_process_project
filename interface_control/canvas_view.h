@@ -34,6 +34,11 @@ signals:
     void saved();
     void view_closed();
 public:
+    void copy();
+    void cut();
+    void paste();
+    void del();
+public:
     bool is_unsaved() { return unsaved_content_; }
     bool load (const std::string& data);
     bool import (const std::vector<taskInfo>& data);

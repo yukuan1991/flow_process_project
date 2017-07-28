@@ -13,7 +13,7 @@
 #include <QLabel>
 #include "json.hpp"
 #include <boost/range/algorithm.hpp>
-#include <QTableWidget>
+#include "interface_control/table_widget.h"
 #include <QDebug>
 #include <QHeaderView>
 #include <QString>
@@ -500,8 +500,7 @@ void canvas_scene::draw_symbol(QPainter *painter)
 
 void canvas_scene::set_table()
 {
-    tablewidget_ = new QTableWidget(second_table_row_size_, second_table_front_col);
-
+    tablewidget_ = new table_widget(second_table_row_size_, second_table_front_col);
     QStringList header;
     header << "工作说明" << "距离" << "时间";
     tablewidget_->setHorizontalHeaderLabels(header);
@@ -761,14 +760,14 @@ void canvas_scene::draw_times(QPainter *painter)
         }
         else if(!(sums.at(col) > 0))
         {
-            qDebug() << "continue";
+//            qDebug() << "continue";
             continue;
         }
         else
         {
             text = QString::number(sums.at(col));
-            qDebug() <<  text;
-            qDebug() << col;
+//            qDebug() <<  text;
+//            qDebug() << col;
         }
 
         painter->drawText(QRectF(first_table_rect.x() + width_ / 2 + (width_ / 10) * col,
@@ -900,5 +899,27 @@ void canvas_scene::hide(bool b)
         }
     }
 }
+
+void canvas_scene::copy()
+{
+    tablewidget_->on_copy_del(table_widget::OPERATION_COPY);
+}
+
+void canvas_scene::cut()
+{
+    tablewidget_->on_copy_del(table_widget::OPERATION_COPY | table_widget::OPERATION_DEL);
+}
+
+void canvas_scene::paste()
+{
+    tablewidget_->on_paste();
+}
+
+void canvas_scene::del()
+{
+    tablewidget_->on_copy_del(table_widget::OPERATION_DEL);
+}
+
+
 
 

@@ -45,7 +45,8 @@ SOURCES += main.cc\
     interface_control/time_unit_dlg.cc \
     interface_control/distance_unit_dlg.cc \
     interface_control/unit_dlg.cc \
-    openvaf.cc
+    openvaf.cc \
+    interface_control/table_widget.cc
 
 HEADERS  += flow_process.h \
     interface_control/ribbon.h \
@@ -63,7 +64,8 @@ HEADERS  += flow_process.h \
     interface_control/time_unit_dlg.h \
     interface_control/distance_unit_dlg.h \
     interface_control/unit_dlg.h \
-    openvaf.h
+    openvaf.h \
+    interface_control/table_widget.h
 
 FORMS    += flow_process.ui
 
