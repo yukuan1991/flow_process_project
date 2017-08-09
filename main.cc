@@ -5,6 +5,7 @@
 #include <QStyleFactory>
 #include <boost/range/adaptors.hpp>
 #include "interface_control/unit_dlg.h"
+#include "interface_control/table_widget.h"
 
 void set_style ()
 {

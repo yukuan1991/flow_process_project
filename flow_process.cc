@@ -24,6 +24,7 @@ flow_process::flow_process(QWidget *parent) :
     init_conn();
     set_button_enabled();
     setMinimumSize(800, 800);
+    setWindowState(Qt::WindowMaximized);
     setWindowIcon(QIcon("png/flow_process.png"));
 }
 
@@ -63,7 +64,7 @@ void flow_process::file_operations(const QString &s)
 void flow_process::file_new()
 {
     auto canvas = create_canvas_view();
-
+    canvas->set_attached_file("未命名");
     canvas->show();
 }
 
@@ -156,7 +157,7 @@ void flow_process::save_subwindow(QMdiSubWindow *sub_window)
     assert(save_view);
 
     QString path;
-    if(save_view->attached_file().isEmpty())
+    if(save_view->attached_file() == "未命名")
     {
         path = QFileDialog::getSaveFileName(this, "文件保存", ".", "Flow Process Sheet (*.fps)");
         if (path.isEmpty())

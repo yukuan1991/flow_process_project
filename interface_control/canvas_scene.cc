@@ -231,6 +231,10 @@ bool canvas_scene::import(const std::vector<taskInfo>& data)
         if (pos >= 0)
         {
             icons_.at(static_cast<size_t>(row)).at(static_cast<size_t> (pos))->set_selected(true);
+            if(hide_state_)
+            {
+                icons_.at(static_cast<size_t>(row)).at(static_cast<size_t> (pos))->show();
+            }
         }
         row ++;
     }
@@ -518,8 +522,8 @@ void canvas_scene::set_table()
     tablewidget_->setColumnWidth(2, time_width_);
     tablewidget_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     tablewidget_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    addWidget(tablewidget_);
 
+    addWidget(tablewidget_);
     for (int i = 0; i < second_table_row_size_; i ++)
     {
         tablewidget_->setItem(i, 0, new QTableWidgetItem);

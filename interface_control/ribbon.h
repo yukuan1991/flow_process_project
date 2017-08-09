@@ -17,7 +17,7 @@
 
 class ribbon_tool;
 class ribbon_button;
-constexpr auto null = nullptr;
+//constexpr auto null = nullptr;
 
 class ribbon : public QTabWidget
 {

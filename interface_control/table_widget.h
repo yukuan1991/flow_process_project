@@ -12,13 +12,14 @@ public:
 
     }
 
-
     void on_copy_del (unsigned flag = 0);
     void on_paste ();
 
 protected:
     void keyPressEvent (QKeyEvent* event) override;
+    void mousePressEvent (QMouseEvent* event) override;
     void mouseReleaseEvent (QMouseEvent* event) override;
+//    void focusOutEvent (QFocusEvent* event) override;
 public:
     static constexpr uint32_t OPERATION_DEL = 0b1;
     static constexpr uint32_t OPERATION_COPY = 0b10;

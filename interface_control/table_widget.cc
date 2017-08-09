@@ -6,14 +6,16 @@
 #include <QMouseEvent>
 #include <QMenu>
 #include <QKeyEvent>
+#include <base/lang/scope.hpp>
+#include <QFocusEvent>
 
 #include <QDebug>
 
 void table_widget::mouseReleaseEvent(QMouseEvent *event)
 {
+//    this->setSelectionMode (QAbstractItemView::SingleSelection);
     QTableWidget::mouseReleaseEvent(event);
 
-//    auto item = this->itemAt(event->pos());
     if(event->button() == Qt::RightButton)
     {
         auto menu = std::make_unique<QMenu> ();
@@ -31,11 +33,18 @@ void table_widget::mouseReleaseEvent(QMouseEvent *event)
     }
 }
 
+//void table_widget::focusOutEvent(QFocusEvent *event)
+//{
+//    QTableWidget::focusOutEvent(event);
+//    qDebug() << "focusOutEvent";
+//}
+
+
 void table_widget::on_copy_del(unsigned flag)
 {
     if (flag == OPERATION_DEL)
     {
-        auto ret = QMessageBox::question(this, "删除", "是否删除?");
+        auto ret = QMessageBox::question(nullptr, "删除", "是否删除?");
         if(ret != QMessageBox::Yes)
         {
             return;
@@ -113,12 +122,15 @@ void table_widget::on_paste()
             }
             auto item = this->item(current_row, current_col);
             item->setData(Qt::EditRole, data[i][j].data());
+            item->setSelected(true);
         }
     }
 }
 
 void table_widget::keyPressEvent(QKeyEvent *event)
 {
+    SCOPE_EXIT { QTableView::keyPressEvent(event); };
+
     if (event->modifiers() & Qt::ControlModifier)
     {
         if(event->key() == Qt::Key_C)
@@ -138,7 +150,17 @@ void table_widget::keyPressEvent(QKeyEvent *event)
         }
     }
 
-    QTableView::keyPressEvent(event);
+}
+
+void table_widget::mousePressEvent(QMouseEvent *event)
+{
+    SCOPE_EXIT { QTableWidget::mousePressEvent(event); };
+    if(event->button() == Qt::LeftButton)
+    {
+        this->clearSelection();
+    }
+    this->setSelectionMode (QAbstractItemView::ExtendedSelection);
+
 }
 
 std::vector<std::vector<std::string> > table_widget::get_clip_structure()
