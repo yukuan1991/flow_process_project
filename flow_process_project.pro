@@ -14,7 +14,7 @@ QMAKE_CXXFLAGS += -std=c++1z
 
 RC_ICONS = png/flow_process.ico
 
-TARGET = flow_process_project
+TARGET = flow-process
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -46,7 +46,10 @@ SOURCES += main.cc\
     interface_control/distance_unit_dlg.cc \
     interface_control/unit_dlg.cc \
     openvaf.cc \
-    interface_control/table_widget.cc
+    interface_control/table_widget.cc \
+    verification/des.cc \
+    verification/encryption.cc \
+    verification/verification.cpp
 
 HEADERS  += flow_process.h \
     interface_control/ribbon.h \
@@ -65,11 +68,18 @@ HEADERS  += flow_process.h \
     interface_control/distance_unit_dlg.h \
     interface_control/unit_dlg.h \
     openvaf.h \
-    interface_control/table_widget.h
+    interface_control/table_widget.h \
+    verification/des.h \
+    verification/encryption.h \
+    verification/verification.h
 
 FORMS    += flow_process.ui
 
-LIBS += -lboost_locale
-LIBS += -liconv
 LIBS += -lboost_filesystem
 LIBS += -lboost_system
+LIBS += -lboost_regex
+LIBS += -lboost_thread
+LIBS += -lboost_locale
+LIBS += -liconv
+LIBS += -lwininet
+LIBS += -lws2_32

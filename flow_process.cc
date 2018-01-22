@@ -26,6 +26,7 @@ flow_process::flow_process(QWidget *parent) :
     setMinimumSize(800, 800);
     setWindowState(Qt::WindowMaximized);
     setWindowIcon(QIcon("png/flow_process.png"));
+    setWindowTitle("Flow Process Charting");
 }
 
 flow_process::~flow_process()

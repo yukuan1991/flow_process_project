@@ -49,7 +49,7 @@ bool canvas_view::init()
 
 canvas_view::~canvas_view()
 {
-
+    qDebug() << "~canvas_view()";
 }
 
 void canvas_view::copy()

@@ -5,6 +5,7 @@
 #include "time_unit_dlg.h"
 #include "distance_unit_dlg.h"
 #include "openvaf.h"
+#include <QDebug>
 
 using std::unique_ptr;
 using std::make_unique;
@@ -39,7 +40,7 @@ public:
     std::string dump ();
     bool load (const std::string& data);
     bool import(const std::vector<taskInfo>& data);
-
+    ~canvas_scene() { qDebug() << "~canvas_scene()"; }
 protected:
     void drawBackground(QPainter* painter, const QRectF &rect) override;
 protected:
