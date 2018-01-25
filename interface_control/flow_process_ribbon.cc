@@ -14,12 +14,12 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
         b.add ("复制", QPixmap ("png/复制.png"), copy_);
         b.add ("粘贴", QPixmap ("png/粘贴.png"), paste_);
         b.add ("删除", QPixmap ("png/删除.png"), del_);
-        b.set_title("第一类");
+        b.set_title("文档操作");
 
         edit[0] = ::move (b);
 
-        b.add ("导入", QPixmap ("png/导入.png"), import_);
-        b.set_title("第二类");
+        b.add ("vaf file", QPixmap ("png/导入.png"), import_);
+        b.set_title("导入");
 
         edit[1] = ::move (b);
 
@@ -32,7 +32,7 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
         button_cell b;
         b.add ("时间单位", QPixmap ("png/时间单位.png"), time_unit_);
         b.add ("距离单位", QPixmap ("png/距离单位.png"), distance_unit_);
-        b.set_title("第一类");
+        b.set_title("属性设置");
 
         setting[0] = ::move (b);
 
@@ -44,7 +44,7 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
 
         button_cell b;
         b.add ("隐藏", QPixmap ("png/隐藏.png"), hide_);
-        b.set_title("第一类");
+        b.set_title("作业内容显示设置");
 
         view[0] = ::move (b);
 
@@ -56,11 +56,11 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
 
         button_cell b;
         b.add ("帮助", QPixmap ("png/帮助.png"), help_);
-        b.set_title("第一类");
+        b.set_title("联系我们");
 
         help[0] = ::move (b);
 
-        add_tab(help, "帮助");
+        add_tab(help, "关于");
     }
 
     hide_->setCheckable(true);
