@@ -18,8 +18,8 @@ flow_process_ribbon::flow_process_ribbon(QWidget *parent)
 
         edit[0] = ::move (b);
 
-        b.add ("vaf file", QPixmap ("png/导入.png"), import_);
-        b.set_title("导入");
+        b.add ("导入", QPixmap ("png/导入.png"), import_);
+        b.set_title("文件(vaf file)");
 
         edit[1] = ::move (b);
 
