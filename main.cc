@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     w.show();
 
     QTimer timer;
-    timer.setInterval (1000);
+    timer.setInterval (900000);
     timer.setSingleShot (true);
     QObject::connect (&timer, &QTimer::timeout, [&] { check_date (); timer.start (); });
     timer.start ();

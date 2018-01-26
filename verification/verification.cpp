@@ -153,11 +153,6 @@ try
         QApplication::instance ()->exit ();
         return;
     }
-
-    data ["last_datetime"] = now.toString ("yyyy-MM-dd hh:mm:ss").toStdString ();
-    string encrypted;
-    krys3des_encryption (data.dump (), DES_KEY, encrypted);
-    file::write_buffer (SERIAL_PATH, encrypted);
 }
 catch (const std::exception & )
 {
